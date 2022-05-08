@@ -19,7 +19,8 @@ public class AnimationSystem extends EntitySystem
     private final ComponentMapper<Animation> animationMapper = ComponentMapper.getFor(Animation.class);
 
     @Override
-    public void addedToEngine(Engine engine) {
+    public void addedToEngine(Engine engine)
+    {
         animatableEntities = engine.getEntitiesFor(Family.all(Animation.class, Velocity.class, Position.class).get());
     }
 

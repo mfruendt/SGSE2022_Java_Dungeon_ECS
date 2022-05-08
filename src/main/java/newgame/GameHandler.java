@@ -14,6 +14,8 @@ import newgame.Components.Position;
 import newgame.Components.Velocity;
 import newgame.DamageDetails.DamageDirections;
 import newgame.Systems.AnimationSystem;
+import newgame.Systems.KiMovementSystem;
+import newgame.Systems.MovementSystem;
 import newgame.animations.CharacterAnimations;
 import newgame.characters.*;
 import newgame.gui.HudHandler;
@@ -98,8 +100,12 @@ public class GameHandler extends MainController implements HeroObserver
     protected void setup()
     {
         AnimationSystem animationSystem = new AnimationSystem();
+        KiMovementSystem kiMovementSystem = new KiMovementSystem();
+        MovementSystem movementSystem = new MovementSystem();
         engine = new Engine();
         engine.addSystem(animationSystem);
+        engine.addSystem(kiMovementSystem);
+        engine.addSystem(movementSystem);
 
         // Create new list of monsters, items and a hero
         monsters = new ArrayList<>();
@@ -449,11 +455,11 @@ public class GameHandler extends MainController implements HeroObserver
     @Override
     public void onLevelLoad()
     {
-        for (int i = 0; i < 5000; i++)
+        for (int i = 0; i < 100; i++)
         {
             Entity entity = new Entity();
-            Point currentPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
-            entity.add(new Position(currentPosition.x, currentPosition.y, levelController.getDungeon()));
+            Point spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
+            entity.add(new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon()));
             entity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_IDLE_L)));
             entity.add(new EasyMonsterKi(0.1f));
             entity.add(new Velocity());
