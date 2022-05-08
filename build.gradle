@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+mainClassName = 'newgame.MainClass'
+
+repositories
+{
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencies
+{
+    implementation files('pmdungeon.jar')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    compile "com.badlogicgames.ashley:ashley:1.7.3"
+}
+
+test
+{
+    useJUnitPlatform()
+}

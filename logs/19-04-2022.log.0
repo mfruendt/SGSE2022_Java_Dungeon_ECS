@@ -1,0 +1,14 @@
+[INFO] (14:59:35): Character spawn: newgame.characters.Hero <newgame.characters.Hero.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.EasyMonster <newgame.characters.EasyMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.EasyMonster <newgame.characters.EasyMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.EasyMonster <newgame.characters.EasyMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.EasyMonster <newgame.characters.EasyMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.EasyMonster <newgame.characters.EasyMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.HardMonster <newgame.characters.HardMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.HardMonster <newgame.characters.HardMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.HardMonster <newgame.characters.HardMonster.<init>>
+[INFO] (14:59:35): Character spawn: newgame.characters.HardMonster <newgame.characters.MiniBoss.<init>>
+[FINE] (14:59:35): Item added to inventory <newgame.inventory.Inventory.addItem>
+[FINE] (14:59:35): Item added to inventory <newgame.inventory.Inventory.addItem>
+[INFO] (14:59:35): Dungeon level loaded <newgame.GameHandler.onLevelLoad>
+[INFO] (14:59:36): DAMAGE Trap Activated <newgame.traps.Trap.activate>

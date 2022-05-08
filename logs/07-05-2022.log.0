@@ -1,0 +1,416 @@
+[INFO] (20:35:40): Character spawn: newgame.characters.Hero <newgame.characters.Hero.<init>>
+[INFO] (20:35:56): Dungeon level loaded <newgame.GameHandler.onLevelLoad>
+[INFO] (20:35:56): Time: 92532600 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 14393800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 9695300 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 7022900 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 7195800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 6875300 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 7028900 <newgame.GameHandler.endFrame>
+[INFO] (20:35:56): Time: 8485300 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 7458400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6804100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 11253900 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6519200 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6286500 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6137100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 5849700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6349400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6178100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 28918700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 7604000 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6275200 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6006400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 8974600 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6093600 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6550400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6172800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 10341400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 8394100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 8890800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 7509100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6772400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 7017100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6472500 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6132000 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6164100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6676300 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6239900 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6377200 <newgame.GameHandler.endFrame>
+[INFO] (20:35:57): Time: 6422400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5922800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 6334600 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 8994900 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5893400 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5934000 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5824700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 6064800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5830700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 6012600 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 7758700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5829200 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5796100 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5875700 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5740000 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 5901800 <newgame.GameHandler.endFrame>
+[INFO] (20:35:58): Time: 6074900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.0 -> 31.0/3.1 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 12023300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.1 -> 31.0/3.1999998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6105100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.1999998 -> 31.0/3.2999997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6281600 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.2999997 -> 31.0/3.3999996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6098200 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.3999996 -> 31.0/3.4999995 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6313100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.0/3.4999995 -> 31.1/3.5999994 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6402300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.1/3.5999994 -> 31.2/3.6999993 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6120300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.2/3.6999993 -> 31.300001/3.7999992 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6328300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.300001/3.7999992 -> 31.400002/3.8999991 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 10910200 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.400002/3.8999991 -> 31.500002/3.999999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 5987700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.500002/3.999999 -> 31.600002/4.099999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6105600 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.600002/4.099999 -> 31.700003/4.199999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6059700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.700003/4.199999 -> 31.800003/4.2999988 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 6393300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:58): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:58): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:58): Hero moved: 31.800003/4.2999988 -> 31.900003/4.3999987 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:58): Time: 5826800 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 31.900003/4.3999987 -> 32.000004/4.4999986 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5774000 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.000004/4.4999986 -> 32.100002/4.5999985 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5853900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.100002/4.5999985 -> 32.2/4.6999984 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5904500 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.2/4.6999984 -> 32.3/4.7999983 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5851900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.3/4.7999983 -> 32.399998/4.899998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6215600 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/4.899998 -> 32.399998/4.999998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6157500 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/4.999998 -> 32.399998/5.099998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6104900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.099998 -> 32.399998/5.199998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6142100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.199998 -> 32.399998/5.299998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6112400 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.299998 -> 32.399998/5.3999977 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5912900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.3999977 -> 32.399998/5.4999976 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5882300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.4999976 -> 32.399998/5.5999975 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5996700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.5999975 -> 32.399998/5.6999974 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6024100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.6999974 -> 32.399998/5.7999973 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5964600 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.7999973 -> 32.399998/5.899997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5932100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.899997 -> 32.399998/5.999997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6219300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.399998/5.999997 -> 32.499996/6.099997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 8951100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.499996/6.099997 -> 32.599995/6.199997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5989700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.599995/6.199997 -> 32.699993/6.299997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5988400 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.699993/6.299997 -> 32.79999/6.3999968 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6124900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.79999/6.3999968 -> 32.89999/6.4999967 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5986700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.89999/6.4999967 -> 32.99999/6.5999966 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6206600 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.99999/6.5999966 -> 33.099987/6.6999965 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5937900 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.99999/6.6999965 -> 33.099987/6.7999964 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5807400 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.99999/6.7999964 -> 33.099987/6.8999963 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6352100 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.99999/6.8999963 -> 33.099987/6.999996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6025200 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 32.99999/6.999996 -> 33.099987/7.099996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6058300 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 33.099987/7.099996 -> 33.199986/7.199996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5987700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 33.199986/7.199996 -> 33.299984/7.299996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 6174700 <newgame.GameHandler.endFrame>
+[FINEST] (20:35:59): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:35:59): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:35:59): Hero moved: 33.299984/7.299996 -> 33.399982/7.399996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:35:59): Time: 5927300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.399982/7.399996 -> 33.49998/7.4999957 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 9235300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.49998/7.4999957 -> 33.59998/7.5999956 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5956800 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.59998/7.5999956 -> 33.699978/7.6999955 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5941500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.699978/7.6999955 -> 33.799976/7.7999954 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5808400 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.799976/7.7999954 -> 33.899975/7.8999953 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5881100 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.899975/7.8999953 -> 33.999973/7.999995 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6016300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/7.999995 -> 34.09997/8.099996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5815500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputD <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.099996 -> 34.09997/8.199996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5788300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.199996 -> 33.999973/8.299996 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5908200 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.299996 -> 33.999973/8.399997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5786300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.399997 -> 33.999973/8.499997 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6100300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.499997 -> 33.999973/8.5999975 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6066500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.5999975 -> 33.999973/8.699998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5914800 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.699998 -> 33.999973/8.799998 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6038400 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.999973/8.799998 -> 33.899975/8.899999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6312500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.899975/8.899999 -> 33.799976/8.999999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6193300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.799976/8.999999 -> 33.699978/9.099999 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6072800 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.699978/9.099999 -> 33.59998/9.2 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6074100 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.59998/9.2 -> 33.49998/9.3 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5957200 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.49998/9.3 -> 33.399982/9.400001 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6092500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.399982/9.400001 -> 33.299984/9.500001 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6099000 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.299984/9.500001 -> 33.199986/9.600001 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5875400 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.199986/9.600001 -> 33.099987/9.700002 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6162400 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 33.099987/9.700002 -> 32.99999/9.800002 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5954300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.99999/9.800002 -> 32.89999/9.9000025 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6097200 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.89999/9.9000025 -> 32.79999/10.000003 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5959600 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.79999/10.000003 -> 32.699993/10.100003 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5982800 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.699993/10.100003 -> 32.599995/10.200004 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 6088300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.599995/10.200004 -> 32.499996/10.300004 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5836300 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:00): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:00): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:00): Hero moved: 32.499996/10.300004 -> 32.399998/10.400004 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:00): Time: 5943000 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:01): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:01): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:01): Hero moved: 32.399998/10.400004 -> 32.3/10.500005 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:01): Time: 6061000 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:01): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:01): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:01): Hero moved: 32.3/10.500005 -> 32.2/10.600005 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:01): Time: 5934800 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:01): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:01): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:01): Hero moved: 32.2/10.600005 -> 32.100002/10.700006 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:01): Time: 5939500 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:01): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINEST] (20:36:01): Keyboard inputA <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:01): Hero moved: 32.100002/10.700006 -> 32.000004/10.800006 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:01): Time: 6107100 <newgame.GameHandler.endFrame>
+[FINEST] (20:36:01): Keyboard inputW <newgame.characters.Hero.handlePlayerMovement>
+[FINE] (20:36:01): Hero moved: 32.000004/10.800006 -> 32.000004/10.900006 <newgame.characters.Hero.handlePlayerMovement>
+[INFO] (20:36:01): Time: 5892100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5623900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5939700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5455500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5667800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5463700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5489700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5642100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5634100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5641700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5596800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5705800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5611700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 15817300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 6709600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5642300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5774900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5867800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5777100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5721000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5664500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5544600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5725900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5843100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5610000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:01): Time: 5769700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5553400 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5830400 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5828600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5994100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5873900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5530300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5855900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5664800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5773800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5601500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5708400 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5837200 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5858800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5629500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5463800 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5423500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5416100 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5554700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5478000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5395200 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5451500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5472500 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5633900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5592000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 9177600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 6010300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5539000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5720300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5611300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:02): Time: 5758900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5659300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5878600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5643300 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5765900 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5662700 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5710600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5668000 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5612400 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5634600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5656600 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5746400 <newgame.GameHandler.endFrame>
+[INFO] (20:36:03): Time: 5705200 <newgame.GameHandler.endFrame>
