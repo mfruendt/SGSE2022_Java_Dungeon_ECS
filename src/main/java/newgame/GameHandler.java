@@ -8,13 +8,8 @@ import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import newgame.Components.Animation;
-import newgame.Components.EasyMonsterKi;
-import newgame.Components.Position;
-import newgame.Components.Velocity;
-import newgame.Systems.SpriteSystem;
-import newgame.Systems.KiMovementSystem;
-import newgame.Systems.MovementSystem;
+import newgame.Components.*;
+import newgame.Systems.*;
 import newgame.animations.CharacterAnimations;
 import newgame.characters.*;
 import newgame.gui.HudHandler;
@@ -86,13 +81,19 @@ public class GameHandler extends MainController implements HeroObserver
     @Override
     protected void setup()
     {
+        engine = new Engine();
         SpriteSystem spriteSystem = new SpriteSystem();
         KiMovementSystem kiMovementSystem = new KiMovementSystem();
         MovementSystem movementSystem = new MovementSystem();
-        engine = new Engine();
+        HealthSystem healthSystem = new HealthSystem(engine);
+        DamageSystem damageSystem = new DamageSystem();
+        CollisionSystem collisionSystem = new CollisionSystem();
         engine.addSystem(spriteSystem);
         engine.addSystem(kiMovementSystem);
         engine.addSystem(movementSystem);
+        engine.addSystem(healthSystem);
+        engine.addSystem(damageSystem);
+        engine.addSystem(collisionSystem);
 
         // Create new list of monsters, items and a hero
         monsters = new ArrayList<>();
@@ -450,6 +451,8 @@ public class GameHandler extends MainController implements HeroObserver
             entity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_IDLE_L)));
             entity.add(new EasyMonsterKi(0.1f));
             entity.add(new Velocity());
+            entity.add(new Health(20f));
+            entity.add(new Collisions());
             engine.addEntity(entity);
         }
 
