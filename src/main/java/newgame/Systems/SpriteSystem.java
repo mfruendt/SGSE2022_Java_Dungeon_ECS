@@ -10,18 +10,21 @@ import newgame.Components.Animation;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
 
-public class AnimationSystem extends EntitySystem
+public class SpriteSystem extends EntitySystem
 {
     private ImmutableArray<Entity> animatableEntities;
+    private ImmutableArray<Entity> drawableEntities;
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
     private final ComponentMapper<Animation> animationMapper = ComponentMapper.getFor(Animation.class);
+    private final ComponentMapper<newgame.Components.Sprite> spriteMapper = ComponentMapper.getFor(newgame.Components.Sprite.class);
 
     @Override
     public void addedToEngine(Engine engine)
     {
         animatableEntities = engine.getEntitiesFor(Family.all(Animation.class, Velocity.class, Position.class).get());
+        drawableEntities = engine.getEntitiesFor(Family.all(newgame.Components.Sprite.class, Position.class).get());
     }
 
     @Override
@@ -31,6 +34,19 @@ public class AnimationSystem extends EntitySystem
         {
             drawAnimation(animatableEntities.get(i));
         }
+
+        for (int i = 0; i < drawableEntities.size(); i++)
+        {
+            drawSprite(drawableEntities.get(i));
+        }
+    }
+
+    private void drawSprite(Entity entity)
+    {
+        Position position = positionMapper.get(entity);
+        newgame.Components.Sprite sprite = spriteMapper.get(entity);
+
+        drawSprite(sprite.sprite.getHeight() / sprite.sprite.getWidth(), sprite.sprite, new Point(position.x, position.y));
     }
 
     private void drawAnimation(Entity entity)

@@ -12,8 +12,7 @@ import newgame.Components.Animation;
 import newgame.Components.EasyMonsterKi;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
-import newgame.DamageDetails.DamageDirections;
-import newgame.Systems.AnimationSystem;
+import newgame.Systems.SpriteSystem;
 import newgame.Systems.KiMovementSystem;
 import newgame.Systems.MovementSystem;
 import newgame.animations.CharacterAnimations;
@@ -22,21 +21,9 @@ import newgame.gui.HudHandler;
 import newgame.items.Chest;
 import newgame.items.DungeonItem;
 import newgame.items.Item;
-import newgame.items.ItemType;
-import newgame.items.Potion;
-import newgame.items.Satchel;
-import newgame.items.Shield;
-import newgame.items.Spell;
 import newgame.items.weapons.Projectile;
-import newgame.items.weapons.Weapon;
-import newgame.items.weapons.meleeweapons.RegularSword;
-import newgame.items.weapons.rangedweapons.Bow;
-import newgame.items.weapons.rangedweapons.Staff;
 import newgame.logger.GameEventsLogger;
-import newgame.logger.InventoryConsoleLogVisitor;
-import newgame.logger.InventoryHudLogVisitor;
 import newgame.logger.LogMessages;
-import newgame.traps.ActivationType;
 import newgame.traps.Trap;
 
 /** Game handler class that will be used to execute the game logic
@@ -99,11 +86,11 @@ public class GameHandler extends MainController implements HeroObserver
     @Override
     protected void setup()
     {
-        AnimationSystem animationSystem = new AnimationSystem();
+        SpriteSystem spriteSystem = new SpriteSystem();
         KiMovementSystem kiMovementSystem = new KiMovementSystem();
         MovementSystem movementSystem = new MovementSystem();
         engine = new Engine();
-        engine.addSystem(animationSystem);
+        engine.addSystem(spriteSystem);
         engine.addSystem(kiMovementSystem);
         engine.addSystem(movementSystem);
 
