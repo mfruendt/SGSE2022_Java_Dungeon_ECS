@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.Collisions;
 import newgame.Components.Health;
+import newgame.Components.MeleeAttack;
 import newgame.Components.Position;
 
 public class CollisionSystem extends EntitySystem
@@ -12,6 +13,7 @@ public class CollisionSystem extends EntitySystem
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Collisions> collisionMapper = ComponentMapper.getFor(Collisions.class);
+    private final ComponentMapper<MeleeAttack> attackMapper = ComponentMapper.getFor(MeleeAttack.class);
 
     @Override
     public void addedToEngine(Engine engine)

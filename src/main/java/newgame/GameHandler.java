@@ -88,16 +88,16 @@ public class GameHandler extends MainController implements HeroObserver
         KiMovementSystem kiMovementSystem = new KiMovementSystem();
         MovementSystem movementSystem = new MovementSystem();
         HealthSystem healthSystem = new HealthSystem(engine);
-        DamageSystem damageSystem = new DamageSystem();
-        CollisionSystem collisionSystem = new CollisionSystem();
+        DamageSystem damageSystem = new DamageSystem(engine);
+        //CollisionSystem collisionSystem = new CollisionSystem();
         CameraSystem cameraSystem = new CameraSystem(cameraEntity);
-        PlayerControlSystem playerControlSystem = new PlayerControlSystem();
+        PlayerControlSystem playerControlSystem = new PlayerControlSystem(engine);
         engine.addSystem(spriteSystem);
         engine.addSystem(kiMovementSystem);
         engine.addSystem(movementSystem);
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
-        engine.addSystem(collisionSystem);
+        //engine.addSystem(collisionSystem);
         engine.addSystem(playerControlSystem);
         engine.addSystem(cameraSystem);
 
@@ -458,7 +458,7 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add(new PlayerControl(0.2f));
         engine.addEntity(heroEntity);
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 10; i++)
         {
             Entity entity = new Entity();
             spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
@@ -466,7 +466,7 @@ public class GameHandler extends MainController implements HeroObserver
             entity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_IDLE_L)));
             entity.add(new EasyMonsterKi(0.1f));
             entity.add(new Velocity());
-            entity.add(new Health(20f));
+            entity.add(new Health(0.5f));
             entity.add(new Collisions());
             engine.addEntity(entity);
         }

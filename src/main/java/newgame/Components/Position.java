@@ -20,4 +20,11 @@ public class Position implements Component
         this.y = y;
         this.level = level;
     }
+
+    public Position(Position position)
+    {
+        x = position.x;
+        y = position.y;
+        level = position.level;
+    }
 }
