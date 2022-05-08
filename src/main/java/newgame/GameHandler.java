@@ -73,6 +73,7 @@ public class GameHandler extends MainController implements HeroObserver
     private int contactFrameCounter = -1;
 
     Engine engine;
+    Camera cameraEntity;
     long startTime, elapsedTime = 0;
 
     /** Setup method that will be called upon starting the game
@@ -81,6 +82,7 @@ public class GameHandler extends MainController implements HeroObserver
     @Override
     protected void setup()
     {
+        cameraEntity = new Camera();
         engine = new Engine();
         SpriteSystem spriteSystem = new SpriteSystem();
         KiMovementSystem kiMovementSystem = new KiMovementSystem();
@@ -88,12 +90,16 @@ public class GameHandler extends MainController implements HeroObserver
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem();
         CollisionSystem collisionSystem = new CollisionSystem();
+        CameraSystem cameraSystem = new CameraSystem(cameraEntity);
+        PlayerControlSystem playerControlSystem = new PlayerControlSystem();
         engine.addSystem(spriteSystem);
         engine.addSystem(kiMovementSystem);
         engine.addSystem(movementSystem);
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
         engine.addSystem(collisionSystem);
+        engine.addSystem(playerControlSystem);
+        engine.addSystem(cameraSystem);
 
         // Create new list of monsters, items and a hero
         monsters = new ArrayList<>();
@@ -108,21 +114,21 @@ public class GameHandler extends MainController implements HeroObserver
 
         questGiver = new Wizard();
         
-        hero = new Hero();
-        this.hero.register(this);
+        //hero = new Hero();
+        //this.hero.register(this);
 
-        collisionHandler = new CollisionHandler<>();
+        //collisionHandler = new CollisionHandler<>();
 
-        hud = new HudHandler();
+        //hud = new HudHandler();
 
         // Add hero to the entity controller and set the camera to follow the hero
-        entityController.addEntity(hero);
-        if (!hud.addPlayerEntity(hero, hero.getInventorySize()))
-        {
-            GameEventsLogger.getLogger().severe(LogMessages.GUI_ENTITY_NULL.toString());
-        }
+        //entityController.addEntity(hero);
+        //if (!hud.addPlayerEntity(hero, hero.getInventorySize()))
+        //{
+        //    GameEventsLogger.getLogger().severe(LogMessages.GUI_ENTITY_NULL.toString());
+        //}
 
-        camera.follow(hero);
+        camera.follow(cameraEntity);
     }
 
     /** Method that will be executed on the beginning of every frame
@@ -143,7 +149,7 @@ public class GameHandler extends MainController implements HeroObserver
     {
         engine.update(elapsedTime);
 
-        hud.update();
+        //hud.update();
 
         //if (contactFrameCounter == -1)
         //{
@@ -443,10 +449,19 @@ public class GameHandler extends MainController implements HeroObserver
     @Override
     public void onLevelLoad()
     {
+        Entity heroEntity = new Entity();
+        Point spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
+        heroEntity.add(new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon()));
+        heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L)));
+        heroEntity.add(new Velocity());
+        heroEntity.add(new Collisions());
+        heroEntity.add(new PlayerControl(0.2f));
+        engine.addEntity(heroEntity);
+
         for (int i = 0; i < 100; i++)
         {
             Entity entity = new Entity();
-            Point spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
+            spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
             entity.add(new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon()));
             entity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_IDLE_L)));
             entity.add(new EasyMonsterKi(0.1f));
@@ -523,7 +538,7 @@ public class GameHandler extends MainController implements HeroObserver
         //}
         
         // Set the level of the hero to the current dungeon
-        hero.setLevel(levelController.getDungeon());
+        //hero.setLevel(levelController.getDungeon());
 
         // Add monsters to the entity controller and set their level to the current dungeon
         //for (Monster monster : monsters)
