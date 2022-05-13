@@ -53,7 +53,7 @@ public class CharacterAnimations
     }
 
     /* Frame time between two animation textures */
-    private static final int FRAME_TIME = 8;
+    private static final int FRAME_TIME = 4;
 
     /** Get a character animation
      * 

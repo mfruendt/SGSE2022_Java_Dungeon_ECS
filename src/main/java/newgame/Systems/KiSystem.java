@@ -5,23 +5,27 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.EasyMonsterKi;
+import newgame.Components.HardMonsterKi;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class KiMovementSystem extends EntitySystem
+public class KiSystem extends EntitySystem
 {
     private ImmutableArray<Entity> easyMonsterEntities;
+    private ImmutableArray<Entity> hardMonsterEntities;
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
     private final ComponentMapper<EasyMonsterKi> easyKiMapper = ComponentMapper.getFor(EasyMonsterKi.class);
+    private final ComponentMapper<HardMonsterKi> hardKiMapper = ComponentMapper.getFor(HardMonsterKi.class);
 
     @Override
     public void addedToEngine(Engine engine)
     {
         easyMonsterEntities = engine.getEntitiesFor(Family.all(EasyMonsterKi.class, Velocity.class, Position.class).get());
+        hardMonsterEntities = engine.getEntitiesFor(Family.all(HardMonsterKi.class, Velocity.class, Position.class).get());
     }
 
     @Override
@@ -30,6 +34,89 @@ public class KiMovementSystem extends EntitySystem
         for (int i = 0; i < easyMonsterEntities.size(); i++)
         {
             calcRandomMovement(easyMonsterEntities.get(i));
+        }
+
+        for (int i = 0; i < hardMonsterEntities.size(); i++)
+        {
+            calcMovementToTarget(hardMonsterEntities.get(i));
+        }
+    }
+
+    private void calcMovementToTarget(Entity entity)
+    {
+        Velocity velocity = velocityMapper.get(entity);
+        HardMonsterKi ki = hardKiMapper.get(entity);
+        Position position = positionMapper.get(entity);
+
+        boolean canMoveInX = false;
+        boolean canMoveInY = false;
+        float newX;
+        float newY;
+
+        // Check if we could move in direction x
+        if (position.x < ki.target.x && position.level.isTileAccessible(new Point(position.x + ki.speed, position.y))
+                || position.x > ki.target.x && position.level.isTileAccessible(new Point(position.x - ki.speed, position.y)))
+        {
+            canMoveInX = true;
+        }
+
+        // Check if we could move in direction x
+        if (position.y < ki.target.y && position.level.isTileAccessible(new Point(position.x, position.y + ki.speed))
+                || position.y > ki.target.y && position.level.isTileAccessible(new Point(position.x, position.y - ki.speed)))
+        {
+            canMoveInY = true;
+        }
+
+        if (canMoveInX && canMoveInY)
+        {
+            if (position.x < ki.target.x)
+            {
+                newX = ki.speed / 1.414f;
+            }
+            else
+            {
+                newX = -ki.speed / 1.414f;
+            }
+
+            if (position.y < ki.target.y)
+            {
+                newY = ki.speed / 1.414f;
+            }
+            else
+            {
+                newY = -ki.speed / 1.414f;
+            }
+
+            velocity.x = newX;
+            velocity.y = newY;
+        }
+        else if (canMoveInX)
+        {
+            if (position.x < ki.target.x)
+            {
+                newX = ki.speed;
+            }
+            else
+            {
+                newX = -ki.speed;
+            }
+
+            velocity.x = newX;
+            velocity.y = 0;
+        }
+        else if (canMoveInY)
+        {
+            if (position.y < ki.target.y)
+            {
+                newY = ki.speed;
+            }
+            else
+            {
+                newY = -ki.speed;
+            }
+
+            velocity.x = 0;
+            velocity.y = newY;
         }
     }
 

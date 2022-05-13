@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import newgame.Components.*;
+import newgame.Factories.MonsterFactory;
 import newgame.Systems.*;
 import newgame.animations.CharacterAnimations;
 import newgame.characters.*;
@@ -85,7 +86,7 @@ public class GameHandler extends MainController implements HeroObserver
         cameraEntity = new Camera();
         engine = new Engine();
         SpriteSystem spriteSystem = new SpriteSystem();
-        KiMovementSystem kiMovementSystem = new KiMovementSystem();
+        KiSystem kiSystem = new KiSystem();
         MovementSystem movementSystem = new MovementSystem();
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem(engine);
@@ -93,7 +94,7 @@ public class GameHandler extends MainController implements HeroObserver
         CameraSystem cameraSystem = new CameraSystem(cameraEntity);
         PlayerControlSystem playerControlSystem = new PlayerControlSystem(engine);
         engine.addSystem(spriteSystem);
-        engine.addSystem(kiMovementSystem);
+        engine.addSystem(kiSystem);
         engine.addSystem(movementSystem);
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
@@ -451,35 +452,22 @@ public class GameHandler extends MainController implements HeroObserver
     {
         Entity heroEntity = new Entity();
         Point spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
-        heroEntity.add(new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon()));
+        Position heroPosition = new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon());
+        heroEntity.add(heroPosition);
         heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L)));
         heroEntity.add(new Velocity());
         heroEntity.add(new Collisions());
         heroEntity.add(new PlayerControl(0.2f));
         engine.addEntity(heroEntity);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100; i++)
         {
-            Entity entity = new Entity();
-            spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
-            entity.add(new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon()));
-            entity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.DEMON_IDLE_L)));
-            entity.add(new EasyMonsterKi(0.1f));
-            entity.add(new Velocity());
-            entity.add(new Health(0.5f));
-            entity.add(new Collisions());
-            engine.addEntity(entity);
+            engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon()));
         }
 
-        // Create monsters
-        for (int i = 0; i < NUMBER_OF_EASY_MONSTERS; i++)
+        for (int i = 0; i < 5; i++)
         {
-           // monsters.add(new EasyMonster(hero));
-        }
-
-        for (int i = 0; i < NUMBER_OF_HARD_MONSTERS; i++)
-        {
-            //monsters.add(new HardMonster(hero));
+            engine.addEntity(MonsterFactory.createHardMonster(levelController.getDungeon(), heroPosition));
         }
 
         //monsters.add(new MiniBoss(hero));
