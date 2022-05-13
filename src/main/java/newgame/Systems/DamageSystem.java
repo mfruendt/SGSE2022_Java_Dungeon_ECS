@@ -2,10 +2,7 @@ package newgame.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import newgame.Components.Collisions;
-import newgame.Components.Health;
-import newgame.Components.MeleeAttack;
-import newgame.Components.Position;
+import newgame.Components.*;
 
 public class DamageSystem extends EntitySystem
 {
@@ -43,7 +40,14 @@ public class DamageSystem extends EntitySystem
                 Entity damagedEntity = damageableEntities.get(j);
 
                 if (checkCollision(attack, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
+                {
                     healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                    if (damagedEntity.getComponent(PassiveKi.class) != null)
+                    {
+                        damagedEntity.add(new HostileKi(0.1f, 1f, damagedEntity.getComponent(PassiveKi.class).target));
+                        damagedEntity.remove(PassiveKi.class);
+                    }
+                }
             }
 
             engine.removeEntity(attackEntity);

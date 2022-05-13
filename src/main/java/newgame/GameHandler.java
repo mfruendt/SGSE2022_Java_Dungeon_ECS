@@ -463,7 +463,7 @@ public class GameHandler extends MainController implements HeroObserver
 
         for (int i = 0; i < 100; i++)
         {
-            engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon()));
+            engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon(), heroPosition));
         }
 
         for (int i = 0; i < 5; i++)

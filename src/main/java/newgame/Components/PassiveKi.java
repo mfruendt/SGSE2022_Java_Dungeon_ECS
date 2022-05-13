@@ -2,16 +2,19 @@ package newgame.Components;
 
 import com.badlogic.ashley.core.Component;
 
-public class HardMonsterKi implements Component
+public class PassiveKi implements Component
 {
     public float speed;
-    public float damage;
     public Position target;
 
-    public HardMonsterKi(float speed, float damage, Position target)
+    public PassiveKi()
+    {
+
+    }
+
+    public PassiveKi(float speed, Position target)
     {
         this.speed = speed;
-        this.damage = damage;
         this.target = target;
     }
 }

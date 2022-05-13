@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
-import newgame.Components.EasyMonsterKi;
-import newgame.Components.HardMonsterKi;
+import newgame.Components.PassiveKi;
+import newgame.Components.HostileKi;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
 
@@ -18,14 +18,14 @@ public class KiSystem extends EntitySystem
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
-    private final ComponentMapper<EasyMonsterKi> easyKiMapper = ComponentMapper.getFor(EasyMonsterKi.class);
-    private final ComponentMapper<HardMonsterKi> hardKiMapper = ComponentMapper.getFor(HardMonsterKi.class);
+    private final ComponentMapper<PassiveKi> easyKiMapper = ComponentMapper.getFor(PassiveKi.class);
+    private final ComponentMapper<HostileKi> hardKiMapper = ComponentMapper.getFor(HostileKi.class);
 
     @Override
     public void addedToEngine(Engine engine)
     {
-        easyMonsterEntities = engine.getEntitiesFor(Family.all(EasyMonsterKi.class, Velocity.class, Position.class).get());
-        hardMonsterEntities = engine.getEntitiesFor(Family.all(HardMonsterKi.class, Velocity.class, Position.class).get());
+        easyMonsterEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class).get());
+        hardMonsterEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class).get());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class KiSystem extends EntitySystem
     private void calcMovementToTarget(Entity entity)
     {
         Velocity velocity = velocityMapper.get(entity);
-        HardMonsterKi ki = hardKiMapper.get(entity);
+        HostileKi ki = hardKiMapper.get(entity);
         Position position = positionMapper.get(entity);
 
         boolean canMoveInX = false;
@@ -123,7 +123,7 @@ public class KiSystem extends EntitySystem
     private void calcRandomMovement(Entity entity)
     {
         Velocity velocity = velocityMapper.get(entity);
-        EasyMonsterKi ki = easyKiMapper.get(entity);
+        PassiveKi ki = easyKiMapper.get(entity);
         Position position = positionMapper.get(entity);
 
         boolean hasMoved = false;
