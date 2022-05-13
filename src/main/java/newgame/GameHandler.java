@@ -458,6 +458,7 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add(new Velocity());
         heroEntity.add(new Collisions());
         heroEntity.add(new PlayerControl(0.2f));
+        heroEntity.add((new Experience(0f)));
         engine.addEntity(heroEntity);
 
         for (int i = 0; i < 100; i++)

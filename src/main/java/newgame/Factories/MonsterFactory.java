@@ -19,6 +19,7 @@ public class MonsterFactory
         easyMonster.add(new Velocity());
         easyMonster.add(new Health(0.5f));
         easyMonster.add(new Collisions());
+        easyMonster.add(new Experience(0.1f));
 
         return easyMonster;
     }
@@ -34,6 +35,7 @@ public class MonsterFactory
         hardMonster.add(new Velocity());
         hardMonster.add(new Health(0.5f));
         hardMonster.add(new Collisions());
+        hardMonster.add(new Experience(0.5f));
 
         return hardMonster;
     }
