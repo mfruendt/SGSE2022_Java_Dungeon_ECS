@@ -31,7 +31,7 @@ public class MonsterFactory
         Point spawnPosition = new Point(level.getRandomPointInDungeon());
         hardMonster.add(new Position(spawnPosition.x, spawnPosition.y, level));
         hardMonster.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.SKELETON_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.SKELETON_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.SKELETON_IDLE_L)));
-        hardMonster.add(new HostileKi(0.1f, 1f, target));
+        hardMonster.add(new HostileKi(0.1f, 1f, 1f, target));
         hardMonster.add(new Velocity());
         hardMonster.add(new Health(0.5f));
         hardMonster.add(new Collisions());

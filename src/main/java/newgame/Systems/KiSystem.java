@@ -4,41 +4,76 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
-import newgame.Components.PassiveKi;
-import newgame.Components.HostileKi;
-import newgame.Components.Position;
-import newgame.Components.Velocity;
+import newgame.Components.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class KiSystem extends EntitySystem
 {
-    private ImmutableArray<Entity> easyMonsterEntities;
-    private ImmutableArray<Entity> hardMonsterEntities;
+    private ImmutableArray<Entity> passiveEntities;
+    private ImmutableArray<Entity> hostileEntities;
+    private ImmutableArray<Entity> playerEntities;
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
     private final ComponentMapper<PassiveKi> easyKiMapper = ComponentMapper.getFor(PassiveKi.class);
     private final ComponentMapper<HostileKi> hardKiMapper = ComponentMapper.getFor(HostileKi.class);
 
+    private Engine engine;
+
     @Override
     public void addedToEngine(Engine engine)
     {
-        easyMonsterEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class).get());
-        hardMonsterEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class).get());
+        this.engine = engine;
+        passiveEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class).get());
+        hostileEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class).get());
+        playerEntities = engine.getEntitiesFor(Family.all(PlayerControl.class, Position.class, Health.class).get());
     }
 
     @Override
     public void update(float deltaTime)
     {
-        for (int i = 0; i < easyMonsterEntities.size(); i++)
+        for (int i = 0; i < passiveEntities.size(); i++)
         {
-            calcRandomMovement(easyMonsterEntities.get(i));
+            calcRandomMovement(passiveEntities.get(i));
         }
 
-        for (int i = 0; i < hardMonsterEntities.size(); i++)
+        for (int i = 0; i < hostileEntities.size(); i++)
         {
-            calcMovementToTarget(hardMonsterEntities.get(i));
+            calcMovementToTarget(hostileEntities.get(i));
+            checkForAttackContact(hostileEntities.get(i));
+        }
+    }
+
+    private void checkForAttackContact(Entity entity)
+    {
+        HostileKi ki = hardKiMapper.get(entity);
+        Position position = positionMapper.get(entity);
+
+        for (int i = 0; i < playerEntities.size(); i++)
+        {
+            Position targetPosition = positionMapper.get(playerEntities.get(i));
+
+            if (ki.framesSinceLastAttack > 0)
+            {
+                ki.framesSinceLastAttack--;
+            }
+            else
+            {
+                if (Math.abs(targetPosition.x - position.x) <= ki.attackRange && Math.abs(targetPosition.y - position.y) <= ki.attackRange)
+                {
+                    if (targetPosition.x - position.x > 0)
+                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    else if (targetPosition.x - position.x < 0)
+                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    else if (targetPosition.y - position.y > 0)
+                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    else if (targetPosition.y - position.y < 0)
+                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+
+                    ki.framesSinceLastAttack = HostileKi.attackCooldown;
+                }
+            }
         }
     }
 

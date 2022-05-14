@@ -32,10 +32,13 @@ public class CameraSystem extends EntitySystem
     @Override
     public void update(float deltaTime)
     {
-        Entity entity = followableEntities.get(0);
+        if (followableEntities.size() >= 1)
+        {
+            Entity entity = followableEntities.get(0);
 
-        Position position = positionMapper.get(entity);
+            Position position = positionMapper.get(entity);
 
-        camera.setPosition(new Point(position.x, position.y));
+            camera.setPosition(new Point(position.x, position.y));
+        }
     }
 }
