@@ -88,6 +88,7 @@ public class GameHandler extends MainController implements HeroObserver
         SpriteSystem spriteSystem = new SpriteSystem();
         KiSystem kiSystem = new KiSystem();
         MovementSystem movementSystem = new MovementSystem();
+        KnockbackSystem knockbackSystem = new KnockbackSystem();
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem(engine);
         //CollisionSystem collisionSystem = new CollisionSystem();
@@ -98,6 +99,7 @@ public class GameHandler extends MainController implements HeroObserver
         engine.addSystem(movementSystem);
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
+        engine.addSystem(knockbackSystem);
         //engine.addSystem(collisionSystem);
         engine.addSystem(playerControlSystem);
         engine.addSystem(cameraSystem);
@@ -457,17 +459,18 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L)));
         heroEntity.add(new Velocity());
         heroEntity.add(new Collisions());
-        heroEntity.add(new Health(10));
         heroEntity.add(new PlayerControl(0.2f));
+        heroEntity.add(new Player());
+        heroEntity.add(new Health(10000));
         heroEntity.add((new Experience(0f)));
         engine.addEntity(heroEntity);
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 0; i++)
         {
             engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon(), heroPosition));
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 1; i++)
         {
             engine.addEntity(MonsterFactory.createHardMonster(levelController.getDungeon(), heroPosition));
         }

@@ -27,7 +27,7 @@ public class KiSystem extends EntitySystem
         this.engine = engine;
         passiveEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class).get());
         hostileEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class).get());
-        playerEntities = engine.getEntitiesFor(Family.all(PlayerControl.class, Position.class, Health.class).get());
+        playerEntities = engine.getEntitiesFor(Family.all(Player.class, Position.class, Health.class).get());
     }
 
     @Override
@@ -62,14 +62,20 @@ public class KiSystem extends EntitySystem
             {
                 if (Math.abs(targetPosition.x - position.x) <= ki.attackRange && Math.abs(targetPosition.y - position.y) <= ki.attackRange)
                 {
-                    if (targetPosition.x - position.x > 0)
-                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
-                    else if (targetPosition.x - position.x < 0)
-                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
-                    else if (targetPosition.y - position.y > 0)
-                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
-                    else if (targetPosition.y - position.y < 0)
-                        engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    if (Math.abs(targetPosition.x - position.x) > Math.abs(targetPosition.y - position.y))
+                    {
+                        if (position.x > targetPosition.x)
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                        else
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    }
+                    else
+                    {
+                        if (position.y > targetPosition.y)
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                        else
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                    }
 
                     ki.framesSinceLastAttack = HostileKi.attackCooldown;
                 }

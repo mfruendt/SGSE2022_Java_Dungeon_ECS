@@ -77,19 +77,19 @@ public class PlayerControlSystem extends EntitySystem
 
         if (Gdx.input.isKeyPressed(PlayerControl.attackForwardKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.UP, 2f, MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.UP, 2f, 0, 0, MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackBackwardKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.DOWN, 2f, MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.DOWN, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackRightKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.RIGHT, 2f, MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.RIGHT, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackLeftKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.LEFT, 2f, MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.LEFT, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE)).add(new Position(position)));
         }
     }
 }

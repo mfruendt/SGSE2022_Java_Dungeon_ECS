@@ -14,7 +14,7 @@ public class HealthSystem extends EntitySystem
 
     private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
     private final ComponentMapper<Experience> experienceMapper = ComponentMapper.getFor(Experience.class);
-    private final ComponentMapper<PlayerControl> playerMapper = ComponentMapper.getFor(PlayerControl.class);
+    private final ComponentMapper<Player> playerMapper = ComponentMapper.getFor(Player.class);
 
     private final Engine engine;
 
@@ -27,7 +27,7 @@ public class HealthSystem extends EntitySystem
     public void addedToEngine(Engine engine)
     {
         killableEntities = engine.getEntitiesFor(Family.all(Health.class).get());
-        playerEntities = engine.getEntitiesFor(Family.all(PlayerControl.class).get());
+        playerEntities = engine.getEntitiesFor(Family.all(Player.class).get());
     }
 
     @Override

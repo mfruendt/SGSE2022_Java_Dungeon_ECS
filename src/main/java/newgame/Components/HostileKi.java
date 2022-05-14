@@ -9,14 +9,18 @@ public class HostileKi implements Component
     public float speed;
     public float damage;
     public float attackRange;
+    public float knockbackSpeed;
+    public int knockbackDuration;
     public Position target;
     public int framesSinceLastAttack = 0;
 
-    public HostileKi(float speed, float damage, float attackRange, Position target)
+    public HostileKi(float speed, float damage, float attackRange, float knockbackSpeed, int knockbackDuration, Position target)
     {
         this.speed = speed;
         this.damage = damage;
         this.attackRange = attackRange;
+        this.knockbackSpeed = knockbackSpeed;
+        this.knockbackDuration = knockbackDuration;
         this.target = target;
     }
 }
