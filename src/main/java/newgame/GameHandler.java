@@ -42,9 +42,6 @@ public class GameHandler extends MainController implements HeroObserver
     /* Playable hero character */
     private Hero hero;
 
-    /* List of all monsters of the current dungeon level */
-    private List<Monster> monsters;
-
     private Wizard questGiver;
 
     /* List of all items in the current dungeon level */
@@ -103,8 +100,6 @@ public class GameHandler extends MainController implements HeroObserver
         engine.addSystem(cameraSystem);
 
         // Create new list of monsters, items and a hero
-        monsters = new ArrayList<>();
-        
         items = new ArrayList<>();
 
         chests = new ArrayList<>();
@@ -543,10 +538,6 @@ public class GameHandler extends MainController implements HeroObserver
         entityController.removeEntity(hero);
         entityController.removeEntity(questGiver);
 
-        for (Monster monster : monsters)
-        {
-            entityController.removeEntity(monster);
-        }
         for (DungeonItem item : items)
         {
             entityController.removeEntity(item);
