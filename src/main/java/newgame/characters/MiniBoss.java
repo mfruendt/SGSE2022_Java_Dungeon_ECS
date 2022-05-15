@@ -39,7 +39,7 @@ public class MiniBoss extends Monster
         activeAnimation = Character.AnimationStates.IDLE_RIGHT;
         lastWalkedDirection = Monster.WalkingDirections.UP;
 
-        GameEventsLogger.getLogger().info(LogMessages.CHARACTER_SPAWN + ": " + HardMonster.class.getName());
+        GameEventsLogger.getLogger().info(LogMessages.CHARACTER_SPAWN + ": " + MiniBoss.class.getName());
     }
 
     /** Get the experience points awarded for killing the monster
