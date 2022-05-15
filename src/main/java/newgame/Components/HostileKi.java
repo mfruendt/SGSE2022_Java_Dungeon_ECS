@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 public class HostileKi implements Component
 {
-    public static int attackCooldown = 8;
+    public static int ATTACK_COOLDOWN = 8;
 
     public float speed;
     public float damage;

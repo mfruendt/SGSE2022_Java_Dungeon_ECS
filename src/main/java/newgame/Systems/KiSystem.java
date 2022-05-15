@@ -5,6 +5,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.*;
+import newgame.textures.WeaponTextures;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -18,6 +19,7 @@ public class KiSystem extends EntitySystem
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
     private final ComponentMapper<PassiveKi> easyKiMapper = ComponentMapper.getFor(PassiveKi.class);
     private final ComponentMapper<HostileKi> hardKiMapper = ComponentMapper.getFor(HostileKi.class);
+    private final ComponentMapper<BossKi> bossKiMapper = ComponentMapper.getFor(BossKi.class);
 
     private Engine engine;
 
@@ -48,6 +50,7 @@ public class KiSystem extends EntitySystem
     private void checkForAttackContact(Entity entity)
     {
         HostileKi ki = hardKiMapper.get(entity);
+        BossKi bossKi = bossKiMapper.get(entity);
         Position position = positionMapper.get(entity);
 
         for (int i = 0; i < playerEntities.size(); i++)
@@ -77,7 +80,22 @@ public class KiSystem extends EntitySystem
                             engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
                     }
 
-                    ki.framesSinceLastAttack = HostileKi.attackCooldown;
+                    ki.framesSinceLastAttack = HostileKi.ATTACK_COOLDOWN;
+                }
+                else if (bossKi != null)
+                {
+                    if (Math.abs(targetPosition.x - position.x) <= bossKi.rangedTargetRange && Math.abs(targetPosition.y - position.y) <= bossKi.rangedTargetRange)
+                    {
+                        float distanceX = Math.abs(targetPosition.x - position.x);
+                        float distanceY = Math.abs(targetPosition.y - position.y);
+
+                        engine.addEntity(new Entity().add(new RangedAttack(ki.damage, bossKi.rangedAttackDuration, ki.attackRange, RangedAttack.Receiver.PLAYER)).
+                                add(new Position(position)).
+                                add(new Sprite(WeaponTextures.MONSTER_BALL.getTexture())).
+                                add(new Velocity(bossKi.rangedAttackSpeed * (targetPosition.x - position.x) / (distanceX + distanceY), bossKi.rangedAttackSpeed * (targetPosition.y - position.y) / (distanceX + distanceY))));
+
+                        ki.framesSinceLastAttack = BossKi.RANGED_ATTACK_COOLDOWN;
+                    }
                 }
             }
         }
