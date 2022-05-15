@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import de.fhbielefeld.pmdungeon.vorgaben.graphic.TextStage;
+import newgame.Components.Experience;
+import newgame.Components.Health;
 import newgame.quests.Quest;
 
 /** Object that manages the player stats HUD
@@ -62,12 +64,19 @@ public class PlayerStatsHud
     /** Draw the stats HUD
      *
      * @param health Health of the player to be displayed
-     * @param skillLevel Skill level of the player to be displayed
+     * @param experience Skill level of the player to be displayed
      */
-    public void draw(float health, float skillLevel, Quest quest)
+    public void draw(Health health, Experience experience, Quest quest)
     {
-        healthLabel.setText(STATS_TEXT_HP + health);
-        skillLabel.setText(STATS_TEXT_LEVEL + (int)skillLevel + " (" + (int)((skillLevel - (int)skillLevel) * 100) + "%)");
+        if (health != null)
+            healthLabel.setText(STATS_TEXT_HP + health.currentHealth);
+        else
+            healthLabel.setText("");
+
+        if (experience != null)
+            skillLabel.setText(STATS_TEXT_LEVEL + (int)experience.experience + " (" + (int)((experience.experience - (int)experience.experience) * 100) + "%)");
+        else
+            skillLabel.setText("");
 
         // If the hero has an active quest draw the description, name and progress on scree. Else reset the text
         if (quest != null)

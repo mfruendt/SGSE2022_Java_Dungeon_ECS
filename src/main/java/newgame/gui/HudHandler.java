@@ -1,16 +1,17 @@
 package newgame.gui;
 
 import de.fhbielefeld.pmdungeon.vorgaben.graphic.HUD;
+import newgame.Components.Experience;
+import newgame.Components.Health;
 import newgame.inventory.Inventory;
 import newgame.inventory.InventoryTypes;
+import newgame.quests.Quest;
 
 /** Handler for the game HUD
  * @author Maxim Fründt
  */
 public class HudHandler
 {
-    private IPlayerHudEntity playerEntity;
-
     private final HUD hud;
 
     private PlayerStatsHud statsHudElement;
@@ -22,21 +23,24 @@ public class HudHandler
     /** Create new HUD handler
      *
      */
-    public HudHandler()
+    public HudHandler(int playerInventorySize)
     {
         hud = new HUD();
+
+        statsHudElement = new PlayerStatsHud(hud.getHudBatch());
+        invHudElement = new InventoryHud(hud.getHudBatch(), playerInventorySize, InventoryTypes.PLAYER_INVENTORY);
     }
 
     /** Update the HUD
      *
      */
-    public void update()
+    public void update(Health health, Experience experience, Quest quest)
     {
         hud.draw();
 
-        if (statsHudElement != null && playerEntity != null)
+        if (statsHudElement != null)
         {
-            statsHudElement.draw(playerEntity.getHealth(), playerEntity.getSkillLevel(), playerEntity.getActiveQuest());
+            statsHudElement.draw(health, experience, quest);
 
             if (invHudElement != null)
             {
@@ -65,37 +69,6 @@ public class HudHandler
         {
             chestInvHudElement.setInventoryContent(inventory);
         }
-    }
-
-    /** Add new trackable player entity to the HUD
-     *
-     * @param entity Player entity to be tracked
-     * @param inventorySize Size of the tracked player entity
-     * @return True if add was successful, else false
-     */
-    public boolean addPlayerEntity(IPlayerHudEntity entity, int inventorySize)
-    {
-        if (entity == null && inventorySize <= 0)
-        {
-            return false;
-        }
-
-        playerEntity = entity;
-
-        statsHudElement = new PlayerStatsHud(hud.getHudBatch());
-        invHudElement = new InventoryHud(hud.getHudBatch(), inventorySize, InventoryTypes.PLAYER_INVENTORY);
-
-        return true;
-    }
-
-    /** Remove a trackable player entity from the HUD
-     *
-     */
-    public void removePlayerEntity()
-    {
-        playerEntity = null;
-        statsHudElement = null;
-        invHudElement = null;
     }
 
     /** Create a new chest view to display chest contents

@@ -13,7 +13,6 @@ import newgame.Factories.MonsterFactory;
 import newgame.Systems.*;
 import newgame.animations.CharacterAnimations;
 import newgame.characters.*;
-import newgame.gui.HudHandler;
 import newgame.items.Chest;
 import newgame.items.DungeonItem;
 import newgame.items.Item;
@@ -42,9 +41,6 @@ public class GameHandler extends MainController implements HeroObserver
 
     /* Playable hero character */
     private Hero hero;
-
-    /* Handler of the game hud */
-    private HudHandler hud;
 
     /* List of all monsters of the current dungeon level */
     private List<Monster> monsters;
@@ -89,6 +85,7 @@ public class GameHandler extends MainController implements HeroObserver
         KiSystem kiSystem = new KiSystem();
         MovementSystem movementSystem = new MovementSystem();
         KnockbackSystem knockbackSystem = new KnockbackSystem();
+        GuiSystem guiSystem = new GuiSystem();
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem(engine);
         //CollisionSystem collisionSystem = new CollisionSystem();
@@ -100,6 +97,7 @@ public class GameHandler extends MainController implements HeroObserver
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
         engine.addSystem(knockbackSystem);
+        engine.addSystem(guiSystem);
         //engine.addSystem(collisionSystem);
         engine.addSystem(playerControlSystem);
         engine.addSystem(cameraSystem);
@@ -122,14 +120,8 @@ public class GameHandler extends MainController implements HeroObserver
 
         //collisionHandler = new CollisionHandler<>();
 
-        //hud = new HudHandler();
-
         // Add hero to the entity controller and set the camera to follow the hero
         //entityController.addEntity(hero);
-        //if (!hud.addPlayerEntity(hero, hero.getInventorySize()))
-        //{
-        //    GameEventsLogger.getLogger().severe(LogMessages.GUI_ENTITY_NULL.toString());
-        //}
 
         camera.follow(cameraEntity);
     }
@@ -151,8 +143,6 @@ public class GameHandler extends MainController implements HeroObserver
     protected void endFrame()
     {
         engine.update(elapsedTime);
-
-        //hud.update();
 
         //if (contactFrameCounter == -1)
         //{
@@ -550,7 +540,6 @@ public class GameHandler extends MainController implements HeroObserver
     {
         entityController.removeEntity(hero);
         entityController.removeEntity(questGiver);
-        hud.removePlayerEntity();
 
         for (Monster monster : monsters)
         {
