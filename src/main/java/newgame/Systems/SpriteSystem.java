@@ -58,15 +58,26 @@ public class SpriteSystem extends EntitySystem
 
         if (velocity.x < 0f)
         {
-            texture = animation.animationLeft.getNextAnimationTexture();
+            animation.activeAnimation = Animation.ActiveAnimation.RUN_LEFT;
+            texture = animation.animationRunLeft.getNextAnimationTexture();
         }
         else if (velocity.x == 0f && velocity.y == 0f)
         {
-            texture = animation.animationIdle.getNextAnimationTexture();
+            if (animation.activeAnimation == Animation.ActiveAnimation.RUN_LEFT || animation.activeAnimation == Animation.ActiveAnimation.IDLE_LEFT)
+            {
+                texture = animation.animationIdleLeft.getNextAnimationTexture();
+                animation.activeAnimation = Animation.ActiveAnimation.IDLE_LEFT;
+            }
+            else
+            {
+                texture = animation.animationIdleRight.getNextAnimationTexture();
+                animation.activeAnimation = Animation.ActiveAnimation.IDLE_RIGHT;
+            }
         }
         else
         {
-            texture = animation.animationRight.getNextAnimationTexture();
+            animation.activeAnimation = Animation.ActiveAnimation.RUN_RIGHT;
+            texture = animation.animationRunRight.getNextAnimationTexture();
         }
 
         drawSprite((float)texture.getHeight() / (float)texture.getWidth(), new com.badlogic.gdx.graphics.g2d.Sprite(texture), new Point(position.x, position.y));

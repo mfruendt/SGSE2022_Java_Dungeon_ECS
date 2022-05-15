@@ -456,7 +456,7 @@ public class GameHandler extends MainController implements HeroObserver
         Point spawnPosition = new Point(levelController.getDungeon().getRandomPointInDungeon());
         Position heroPosition = new Position(spawnPosition.x, spawnPosition.y, levelController.getDungeon());
         heroEntity.add(heroPosition);
-        heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L)));
+        heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_R)));
         heroEntity.add(new Velocity());
         heroEntity.add(new Collisions());
         heroEntity.add(new PlayerControl(0.2f));
