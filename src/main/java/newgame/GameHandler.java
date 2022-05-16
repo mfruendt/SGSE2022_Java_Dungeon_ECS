@@ -6,6 +6,7 @@ import de.fhbielefeld.pmdungeon.vorgaben.game.Controller.MainController;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import newgame.Components.*;
@@ -130,6 +131,9 @@ public class GameHandler extends MainController implements HeroObserver
         startTime = System.nanoTime();
 
     }
+
+    double[] timeMeasurements = new double[11];
+    int currentMeasurement = 0;
 
     /** Method that will be executed on the end of every frame
      *
@@ -428,7 +432,16 @@ public class GameHandler extends MainController implements HeroObserver
 
         elapsedTime = System.nanoTime() - startTime;
 
-        GameEventsLogger.getLogger().info("Time: " + elapsedTime);
+        timeMeasurements[currentMeasurement++] = elapsedTime;
+
+        if (currentMeasurement == 11)
+        {
+            currentMeasurement = 0;
+
+            Arrays.sort(timeMeasurements);
+
+            GameEventsLogger.getLogger().info("Time: " + timeMeasurements[5]);
+        }
     }
 
     /** Method that will be called upon loading the level
@@ -450,12 +463,12 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add((new Experience(0f)));
         engine.addEntity(heroEntity);
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 100; i++)
         {
             engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon(), heroPosition));
         }
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 10; i++)
         {
             engine.addEntity(MonsterFactory.createHardMonster(levelController.getDungeon(), heroPosition));
         }

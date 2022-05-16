@@ -89,7 +89,7 @@ public class DamageSystem extends EntitySystem
 
         if (attack.receiver == RangedAttack.Receiver.HOSTILE)
         {
-            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage);
+            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, attack.attacker);
             attack.hasHit = true;
             return true;
         }
@@ -98,6 +98,7 @@ public class DamageSystem extends EntitySystem
             if (player != null)
             {
                 healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
                 GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
                 attack.hasHit = true;
                 return true;
@@ -115,7 +116,7 @@ public class DamageSystem extends EntitySystem
 
         if (attack.receiver == MeleeAttack.Receiver.HOSTILE)
         {
-            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage);
+            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, attack.attacker);
             return true;
         }
         else if (attack.receiver == MeleeAttack.Receiver.PLAYER)
@@ -123,6 +124,7 @@ public class DamageSystem extends EntitySystem
             if (player != null)
             {
                 healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
                 GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
                 damagedEntity.remove(PlayerControl.class);
 
@@ -152,7 +154,7 @@ public class DamageSystem extends EntitySystem
         return false;
     }
 
-    private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage)
+    private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage, Entity attacker)
     {
         if (passiveKi != null)
         {
@@ -164,10 +166,12 @@ public class DamageSystem extends EntitySystem
                     passiveKi.target));
             damagedEntity.remove(PassiveKi.class);
             healthMapper.get(damagedEntity).currentHealth -= damage;
+            healthMapper.get(damagedEntity).lastAttacker = attacker;
         }
         else if (hostileKi != null)
         {
             healthMapper.get(damagedEntity).currentHealth -= damage;
+            healthMapper.get(damagedEntity).lastAttacker = attacker;
         }
     }
 

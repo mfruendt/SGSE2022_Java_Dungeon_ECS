@@ -10,7 +10,6 @@ import newgame.logger.LogMessages;
 public class HealthSystem extends EntitySystem
 {
     private ImmutableArray<Entity> killableEntities;
-    private ImmutableArray<Entity> playerEntities;
 
     private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
     private final ComponentMapper<Experience> experienceMapper = ComponentMapper.getFor(Experience.class);
@@ -27,7 +26,6 @@ public class HealthSystem extends EntitySystem
     public void addedToEngine(Engine engine)
     {
         killableEntities = engine.getEntitiesFor(Family.all(Health.class).get());
-        playerEntities = engine.getEntitiesFor(Family.all(Player.class).get());
     }
 
     @Override
@@ -44,7 +42,7 @@ public class HealthSystem extends EntitySystem
                 if (playerMapper.get(entity) == null)
                 {
                     GameEventsLogger.getLogger().info(LogMessages.MONSTER_KILLED.toString());
-                    playerEntities.get(0).getComponent(Experience.class).experience += experience.experience;
+                    experienceMapper.get(health.lastAttacker).experience += experience.experience;
                 }
                 engine.removeEntity(entity);
             }

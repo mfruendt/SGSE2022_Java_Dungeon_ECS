@@ -68,16 +68,16 @@ public class KiSystem extends EntitySystem
                     if (Math.abs(targetPosition.x - position.x) > Math.abs(targetPosition.y - position.y))
                     {
                         if (position.x > targetPosition.x)
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                         else
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                     }
                     else
                     {
                         if (position.y > targetPosition.y)
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                         else
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                     }
 
                     ki.framesSinceLastAttack = HostileKi.ATTACK_COOLDOWN;
@@ -89,7 +89,7 @@ public class KiSystem extends EntitySystem
                         float distanceX = Math.abs(targetPosition.x - position.x);
                         float distanceY = Math.abs(targetPosition.y - position.y);
 
-                        engine.addEntity(new Entity().add(new RangedAttack(ki.damage, bossKi.rangedAttackDuration, ki.attackRange, RangedAttack.Receiver.PLAYER)).
+                        engine.addEntity(new Entity().add(new RangedAttack(ki.damage, bossKi.rangedAttackDuration, ki.attackRange, RangedAttack.Receiver.PLAYER, entity)).
                                 add(new Position(position)).
                                 add(new Sprite(WeaponTextures.MONSTER_BALL.getTexture())).
                                 add(new Velocity(bossKi.rangedAttackSpeed * (targetPosition.x - position.x) / (distanceX + distanceY), bossKi.rangedAttackSpeed * (targetPosition.y - position.y) / (distanceX + distanceY))));
