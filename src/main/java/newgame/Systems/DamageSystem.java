@@ -3,6 +3,7 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.*;
+import newgame.Components.Tags.Player;
 import newgame.Factories.MonsterFactory;
 import newgame.logger.GameEventsLogger;
 import newgame.logger.LogMessages;

@@ -15,6 +15,8 @@ public class PlayerControl implements Component
     public static int attackRightKey = Input.Keys.RIGHT;
     public static int attackLeftKey = Input.Keys.LEFT;
 
+    public static int pickupKey = Input.Keys.F;
+
     public float speed;
 
     public PlayerControl(float speed)

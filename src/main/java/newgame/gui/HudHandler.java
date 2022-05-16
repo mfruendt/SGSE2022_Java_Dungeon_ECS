@@ -28,7 +28,7 @@ public class HudHandler
         hud = new HUD();
 
         statsHudElement = new PlayerStatsHud(hud.getHudBatch());
-        invHudElement = new InventoryHud(hud.getHudBatch(), playerInventorySize, InventoryTypes.PLAYER_INVENTORY);
+        invHudElement = new InventoryHud(hud.getHudBatch(), 10, InventoryTypes.PLAYER_INVENTORY);
     }
 
     /** Update the HUD
@@ -52,6 +52,12 @@ public class HudHandler
                 chestInvHudElement.draw();
             }
         }
+    }
+
+    public void updateInventory(newgame.Components.Inventory inventory)
+    {
+        if (inventory != null)
+            invHudElement.setInventoryContent(inventory);
     }
 
     /** Display the inventory content of an inventory object

@@ -88,6 +88,34 @@ public class InventoryHud
         statsTexts.draw();
     }
 
+    public void setInventoryContent(newgame.Components.Inventory inventory)
+    {
+        // If the inventory is valid draw all inventory contents, else set text to empty
+        if (inventory != null)
+        {
+            for (int i = 1, j = 0; i < inventorySlots.size(); i++, j++)
+            {
+                if (inventory.items.get(j) != null)
+                {
+                    inventorySlots.get(i).setText(j + INV_SLOT_PREFIX + inventory.items.get(j).getClass().getSimpleName());
+                }
+                else
+                {
+                    inventorySlots.get(i).setText(j + INV_SLOT_PREFIX + INV_SLOT_EMPTY);
+                }
+            }
+        }
+        else
+        {
+            for (Label label : inventorySlots)
+            {
+                label.setText("");
+            }
+        }
+
+        draw();
+    }
+
     /** Set new inventory content to be displayed on the HUD
      *
      * @param inventory Inventory content

@@ -1,4 +1,4 @@
-package newgame.Components;
+package newgame.Components.Tags;
 
 import com.badlogic.ashley.core.Component;
 

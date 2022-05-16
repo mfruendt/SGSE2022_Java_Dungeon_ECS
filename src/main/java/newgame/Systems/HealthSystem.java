@@ -2,8 +2,8 @@ package newgame.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.Interpolation;
 import newgame.Components.*;
+import newgame.Components.Tags.Player;
 import newgame.logger.GameEventsLogger;
 import newgame.logger.LogMessages;
 

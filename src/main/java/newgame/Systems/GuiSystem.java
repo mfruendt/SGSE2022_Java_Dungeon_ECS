@@ -2,11 +2,10 @@ package newgame.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.Experience;
 import newgame.Components.Health;
-import newgame.Components.Player;
-import newgame.Components.Position;
+import newgame.Components.Inventory;
+import newgame.Components.Tags.Player;
 import newgame.gui.HudHandler;
 
 public class GuiSystem extends EntitySystem
@@ -15,6 +14,7 @@ public class GuiSystem extends EntitySystem
 
     private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
     private final ComponentMapper<Experience> experienceMapper = ComponentMapper.getFor(Experience.class);
+    private final ComponentMapper<Inventory> inventoryMapper = ComponentMapper.getFor(Inventory.class);
 
     private HudHandler hudHandler;
 
@@ -36,6 +36,7 @@ public class GuiSystem extends EntitySystem
             Experience experience = experienceMapper.get(entity);
 
             hudHandler.update(health, experience, null);
+            hudHandler.updateInventory(inventoryMapper.get(entity));
         }
     }
 }

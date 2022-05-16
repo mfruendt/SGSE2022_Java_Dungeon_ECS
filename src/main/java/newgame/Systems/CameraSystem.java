@@ -3,7 +3,7 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
-import newgame.Components.Player;
+import newgame.Components.Tags.Player;
 import newgame.Components.Position;
 import newgame.characters.Camera;
 

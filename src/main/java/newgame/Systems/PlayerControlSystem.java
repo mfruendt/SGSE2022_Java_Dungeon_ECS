@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import newgame.Components.MeleeAttack;
 import newgame.Components.PlayerControl;
 import newgame.Components.Position;
+import newgame.Components.PickupRequest;
 import newgame.Components.Velocity;
 
 public class PlayerControlSystem extends EntitySystem
@@ -36,6 +37,15 @@ public class PlayerControlSystem extends EntitySystem
         {
             move(controllableEntities.get(i));
             attack(controllableEntities.get(i));
+            handleItemInput(controllableEntities.get(i));
+        }
+    }
+
+    private void handleItemInput(Entity entity)
+    {
+        if (Gdx.input.isKeyPressed(PlayerControl.pickupKey))
+        {
+            engine.addEntity(new Entity().add(new PickupRequest(entity)).add(new Position(positionMapper.get(entity))));
         }
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.*;
+import newgame.Components.Tags.Player;
 import newgame.textures.WeaponTextures;
 
 import java.util.concurrent.ThreadLocalRandom;
