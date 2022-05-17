@@ -3,11 +3,8 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
-import newgame.Components.MeleeAttack;
-import newgame.Components.PlayerControl;
-import newgame.Components.Position;
-import newgame.Components.PickupRequest;
-import newgame.Components.Velocity;
+import com.badlogic.gdx.Input;
+import newgame.Components.*;
 
 public class PlayerControlSystem extends EntitySystem
 {
@@ -46,6 +43,50 @@ public class PlayerControlSystem extends EntitySystem
         if (Gdx.input.isKeyPressed(PlayerControl.pickupKey))
         {
             engine.addEntity(new Entity().add(new PickupRequest(entity)).add(new Position(positionMapper.get(entity))));
+        }
+
+        if (Gdx.input.isKeyPressed(PlayerControl.dropKey))
+        {
+            if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 0)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 1)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 2)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 3)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_5))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 4)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_6))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 5)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_7))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 6)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_8))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 7)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_9))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 8)).add(new Position(positionMapper.get(entity))));
+            }
+            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_0))
+            {
+                engine.addEntity(new Entity().add(new DropRequest(entity, 9)).add(new Position(positionMapper.get(entity))));
+            }
         }
     }
 

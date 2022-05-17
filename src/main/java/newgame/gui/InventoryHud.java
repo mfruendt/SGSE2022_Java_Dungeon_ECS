@@ -1,10 +1,12 @@
 package newgame.gui;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import de.fhbielefeld.pmdungeon.vorgaben.graphic.TextStage;
+import newgame.Components.Tags.Pickup;
 import newgame.inventory.Inventory;
 import newgame.inventory.InventoryTypes;
 import newgame.items.Satchel;
@@ -71,11 +73,11 @@ public class InventoryHud
         {
             if (inventoryType == InventoryTypes.PLAYER_INVENTORY)
             {
-                inventorySlots.add(statsTexts.drawText(i + INV_SLOT_PREFIX + INV_SLOT_EMPTY, INV_SLOT_FONT_PATH, INV_SLOT_COLOR, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_X0_PLAYER, INV_SLOT_Y0 - INV_SLOT_Y_OFFSET * (i + 1)));
+                inventorySlots.add(statsTexts.drawText(((i + 1) % 10) + INV_SLOT_PREFIX + INV_SLOT_EMPTY, INV_SLOT_FONT_PATH, INV_SLOT_COLOR, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_X0_PLAYER, INV_SLOT_Y0 - INV_SLOT_Y_OFFSET * (i + 1)));
             }
             else if (inventoryType == InventoryTypes.CHEST_INVENTORY)
             {
-                inventorySlots.add(statsTexts.drawText(i + INV_SLOT_PREFIX + INV_SLOT_EMPTY, INV_SLOT_FONT_PATH, INV_SLOT_COLOR, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_X0_CHEST, INV_SLOT_Y0 - INV_SLOT_Y_OFFSET * (i + 1)));
+                inventorySlots.add(statsTexts.drawText(((i + 1) % 10) + INV_SLOT_PREFIX + INV_SLOT_EMPTY, INV_SLOT_FONT_PATH, INV_SLOT_COLOR, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_FONT_SIZE, INV_SLOT_X0_CHEST, INV_SLOT_Y0 - INV_SLOT_Y_OFFSET * (i + 1)));
             }
         }
     }
@@ -88,6 +90,8 @@ public class InventoryHud
         statsTexts.draw();
     }
 
+    private final ComponentMapper<Pickup> pickupMapper = ComponentMapper.getFor(Pickup.class);
+
     public void setInventoryContent(newgame.Components.Inventory inventory)
     {
         // If the inventory is valid draw all inventory contents, else set text to empty
@@ -97,11 +101,11 @@ public class InventoryHud
             {
                 if (inventory.items.get(j) != null)
                 {
-                    inventorySlots.get(i).setText(j + INV_SLOT_PREFIX + inventory.items.get(j).getClass().getSimpleName());
+                    inventorySlots.get(i).setText((i % 10) + INV_SLOT_PREFIX + pickupMapper.get(inventory.items.get(j)).displayName);
                 }
                 else
                 {
-                    inventorySlots.get(i).setText(j + INV_SLOT_PREFIX + INV_SLOT_EMPTY);
+                    inventorySlots.get(i).setText((i % 10) + INV_SLOT_PREFIX + INV_SLOT_EMPTY);
                 }
             }
         }

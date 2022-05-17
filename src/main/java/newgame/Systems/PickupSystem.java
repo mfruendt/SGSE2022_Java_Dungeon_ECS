@@ -2,19 +2,18 @@ package newgame.Systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import newgame.Components.Inventory;
-import newgame.Components.Position;
-import newgame.Components.Sprite;
+import newgame.Components.*;
 import newgame.Components.Tags.Pickup;
-import newgame.Components.PickupRequest;
 
 public class PickupSystem extends EntitySystem
 {
     private ImmutableArray<Entity> pickupRequests;
+    private ImmutableArray<Entity> dropRequests;
     private ImmutableArray<Entity> pickupableEntities;
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<PickupRequest> requestMapper = ComponentMapper.getFor(PickupRequest.class);
+    private final ComponentMapper<PickupRequest> pickupRequestMapper = ComponentMapper.getFor(PickupRequest.class);
+    private final ComponentMapper<DropRequest> dropRequestMapper = ComponentMapper.getFor(DropRequest.class);
     private final ComponentMapper<Inventory> inventoryMapper = ComponentMapper.getFor(Inventory.class);
 
     private final Engine engine;
@@ -30,6 +29,7 @@ public class PickupSystem extends EntitySystem
     {
         pickupableEntities = engine.getEntitiesFor(Family.all(Pickup.class, Position.class).get());
         pickupRequests = engine.getEntitiesFor(Family.all(PickupRequest.class, Position.class).get());
+        dropRequests = engine.getEntitiesFor(Family.all(DropRequest.class, Position.class).get());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class PickupSystem extends EntitySystem
 
                 if (checkContact(positionMapper.get(request), positionMapper.get(pickup)))
                 {
-                    addPickupToInventory(requestMapper.get(request).requester, pickup);
+                    addPickupToInventory(pickupRequestMapper.get(request).requester, pickup);
 
                     break;
                 }
@@ -53,6 +53,33 @@ public class PickupSystem extends EntitySystem
 
             engine.removeEntity(request);
         }
+
+        for (int i = 0; i < dropRequests.size(); i++)
+        {
+            Entity request = dropRequests.get(i);
+
+            dropPickupFromInventory(request);
+
+            engine.removeEntity(request);
+        }
+    }
+
+    private void dropPickupFromInventory(Entity request)
+    {
+        DropRequest dropRequest = dropRequestMapper.get(request);
+        Position position = positionMapper.get(request);
+        Inventory inventory = inventoryMapper.get(dropRequest.requester);
+
+        if (inventory == null)
+            return;
+
+        if (inventory.size <= dropRequest.index || inventory.usedSize == 0)
+            return;
+
+        inventory.items.get(dropRequest.index).add(new Position(position));
+
+        inventory.usedSize--;
+        inventory.items.set(dropRequest.index, null);
     }
 
     private void addPickupToInventory(Entity requester, Entity pickup)
@@ -80,7 +107,6 @@ public class PickupSystem extends EntitySystem
         }
 
         pickup.remove(Position.class);
-        pickup.remove(Sprite.class);
     }
 
     private boolean checkContact(Position pos1, Position pos2)

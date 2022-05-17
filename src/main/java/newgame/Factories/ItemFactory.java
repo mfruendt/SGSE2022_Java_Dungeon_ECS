@@ -17,7 +17,7 @@ public class ItemFactory
         Point spawnPosition = new Point(level.getRandomPointInDungeon());
         sword.add(new Position(spawnPosition.x, spawnPosition.y, level));
         sword.add(new Sprite(WeaponTextures.REGULAR_SWORD.getTexture()));
-        sword.add(new Pickup());
+        sword.add(new Pickup("Sword"));
 
         return sword;
     }
