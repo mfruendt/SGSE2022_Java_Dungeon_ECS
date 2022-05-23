@@ -56,6 +56,7 @@ public class MonsterFactory
                 CharacterAnimations.getAnimation(CharacterAnimations.Animations.ZOMBIE_IDLE_R)));
         easyMonster.add(new PassiveKi(EASY_MONSTER_SPEED, target));
         easyMonster.add(new MeleeCombatStats(EASY_MONSTER_DAMAGE, EASY_MONSTER_PROTECTION, EASY_MONSTER_RANGE, EASY_MONSTER_KNOCKBACK_SPEED, EASY_MONSTER_KNOCKBACK_DURATION, EASY_MONSTER_ATTACK_COOLDOWN));
+        easyMonster.add(new RangedCombatStats());
         easyMonster.add(new Velocity());
         easyMonster.add(new Health(EASY_MONSTER_HEALTH));
         easyMonster.add(new Experience(EASY_MONSTER_EXPERIENCE));
@@ -75,6 +76,7 @@ public class MonsterFactory
                 CharacterAnimations.getAnimation(CharacterAnimations.Animations.SKELETON_IDLE_R)));
         hardMonster.add(new HostileKi(HARD_MONSTER_SPEED, target));
         hardMonster.add(new MeleeCombatStats(HARD_MONSTER_DAMAGE, HARD_MONSTER_PROTECTION, HARD_MONSTER_RANGE, HARD_MONSTER_KNOCKBACK_SPEED, HARD_MONSTER_KNOCKBACK_DURATION, HARD_MONSTER_ATTACK_COOLDOWN));
+        hardMonster.add(new RangedCombatStats());
         hardMonster.add(new Velocity());
         hardMonster.add(new Health(HARD_MONSTER_HEALTH));
         hardMonster.add(new Experience(HARD_MONSTER_EXPERIENCE));

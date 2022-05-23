@@ -165,31 +165,32 @@ public class PlayerControlSystem extends EntitySystem
         if (meleeCombatStats.damage == 0)
             return;
 
-        if (meleeCombatStats.framesSinceLastAttack == 0)
-        {
-            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
-        }
-        else
+        if (meleeCombatStats.framesSinceLastAttack != 0)
         {
             meleeCombatStats.framesSinceLastAttack--;
             return;
         }
 
+
         if (Gdx.input.isKeyPressed(PlayerControl.attackForwardKey))
         {
             engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.UP, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackBackwardKey))
         {
             engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.DOWN, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackRightKey))
         {
             engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.RIGHT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackLeftKey))
         {
             engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.LEFT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
         }
     }
 
@@ -204,11 +205,7 @@ public class PlayerControlSystem extends EntitySystem
         if (rangedCombatStats.damage == 0)
             return;
 
-        if (rangedCombatStats.framesSinceLastAttack == 0)
-        {
-            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
-        }
-        else
+        if (rangedCombatStats.framesSinceLastAttack != 0)
         {
             rangedCombatStats.framesSinceLastAttack--;
             return;
@@ -220,27 +217,31 @@ public class PlayerControlSystem extends EntitySystem
                     .add(new Position(position))
                     .add(new Velocity(0, rangedCombatStats.attackSpeed))
                     .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackBackwardKey))
         {
             engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
                     .add(new Position(position))
-                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Velocity(0, -rangedCombatStats.attackSpeed))
                     .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackRightKey))
         {
             engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
                     .add(new Position(position))
-                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Velocity(rangedCombatStats.attackSpeed, 0))
                     .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackLeftKey))
         {
             engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
                     .add(new Position(position))
-                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Velocity(-rangedCombatStats.attackSpeed, 0))
                     .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
         }
     }
 }

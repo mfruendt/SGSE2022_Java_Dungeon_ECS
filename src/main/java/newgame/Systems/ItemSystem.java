@@ -133,6 +133,8 @@ public class ItemSystem extends EntitySystem
             // If a weapon is already equipped, unequip that first
             if (meleeCombatStats.equippedWeapon != null)
                 unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
+            if (rangedCombatStats.equippedWeapon != null)
+                unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
 
             pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             meleeCombatStats.equippedWeapon = item;
@@ -150,6 +152,8 @@ public class ItemSystem extends EntitySystem
             // If a weapon is already equipped, unequip that first
             if (rangedCombatStats.equippedWeapon != null)
                 unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
+            if (meleeCombatStats.equippedWeapon != null)
+                unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
 
             pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             rangedCombatStats.equippedWeapon = item;
@@ -293,6 +297,7 @@ public class ItemSystem extends EntitySystem
             RangedWeaponStats rangedWeaponStats = rangedWeaponStatsMapper.get(equipment);
 
             rangedCombatStats.attackSpeed -= rangedWeaponStats.attackSpeed;
+            rangedCombatStats.damage -= rangedWeaponStats.damage;
             rangedCombatStats.attackRange -= rangedWeaponStats.range;
             rangedCombatStats.attackCooldown -= rangedWeaponStats.cooldown;
             rangedCombatStats.attackDuration -= rangedWeaponStats.attackDuration;

@@ -4,8 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.Items.HealingPotionStats;
+import newgame.Components.Items.RangedWeaponStats;
 import newgame.Components.Items.ShieldStats;
 import newgame.Components.Position;
+import newgame.Components.RangedCombatStats;
 import newgame.Components.Sprite;
 import newgame.Components.Tags.Pickup;
 import newgame.Components.Items.MeleeWeaponStats;
@@ -20,6 +22,13 @@ public class ItemFactory
     public static final int SWORD_COOLDOWN = 8;
     public static final float SWORD_KNOCKBACK_SPEED = 0f;
     public static final int SWORD_KNOCKBACK_DURATION = 0;
+
+    public static final int STAFF_USES = 3;
+    public static final float STAFF_DAMAGE = 10f;
+    public static final float STAFF_RANGE = 2f;
+    public static final int STAFF_COOLDOWN = 16;
+    public static final float STAFF_SPEED = 0.5f;
+    public static final int STAFF_DURATION = 20;
 
     public static final int SHIELD_USES = 3;
     public static final float SHIELD_PROTECTION = 0.5f;
@@ -39,6 +48,19 @@ public class ItemFactory
         sword.add(new Pickup("Sword"));
 
         return sword;
+    }
+
+    public static Entity createStaffItem(DungeonWorld level)
+    {
+        Entity staff = new Entity();
+
+        Point spawnPosition = new Point(level.getRandomPointInDungeon());
+        staff.add(new Position(spawnPosition.x, spawnPosition.y, level));
+        staff.add(new Sprite(WeaponTextures.STAFF.getTexture()));
+        staff.add(new RangedWeaponStats(STAFF_USES, STAFF_DAMAGE, STAFF_RANGE, STAFF_COOLDOWN, STAFF_SPEED, STAFF_DURATION));
+        staff.add(new Pickup("Staff"));
+
+        return staff;
     }
 
     public static Entity createShieldItem(DungeonWorld level)

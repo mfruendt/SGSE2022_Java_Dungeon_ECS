@@ -64,7 +64,7 @@ public class DamageSystem extends EntitySystem
             {
                 Entity damagedEntity = damageableEntities.get(j);
 
-                if (checkMeleeCollision(attack, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
+                if (damagedEntity != attack.attacker && checkMeleeCollision(attack, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
                 {
                     if (executeMeleeAttack(damagedEntity, attack))
                     {
@@ -97,7 +97,7 @@ public class DamageSystem extends EntitySystem
             {
                 Entity damagedEntity = damageableEntities.get(j);
 
-                if (checkCollision(attack.bulletRange, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
+                if (damagedEntity != attack.attacker && checkCollision(attack.bulletRange, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
                 {
                     if (executeRangedAttack(damagedEntity, attack))
                         break;
