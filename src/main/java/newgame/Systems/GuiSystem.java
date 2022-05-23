@@ -6,6 +6,7 @@ import newgame.Components.Experience;
 import newgame.Components.Health;
 import newgame.Components.Inventory;
 import newgame.Components.Tags.Player;
+import newgame.Factories.HeroFactory;
 import newgame.gui.HudHandler;
 
 public class GuiSystem extends EntitySystem
@@ -22,7 +23,7 @@ public class GuiSystem extends EntitySystem
     public void addedToEngine(Engine engine)
     {
         monitorableEntities = engine.getEntitiesFor(Family.all(Player.class).get());
-        hudHandler = new HudHandler(0);
+        hudHandler = new HudHandler(HeroFactory.HERO_INVENTORY_SIZE);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class GuiSystem extends EntitySystem
             Health health = healthMapper.get(entity);
             Experience experience = experienceMapper.get(entity);
 
-            hudHandler.update(health, experience, null);
+            hudHandler.update(health, experience);
             hudHandler.updateInventory(inventoryMapper.get(entity));
         }
     }

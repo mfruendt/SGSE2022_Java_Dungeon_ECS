@@ -131,10 +131,16 @@ public class ItemSystem extends EntitySystem
         if (meleeWeaponStats != null)
         {
             // If a weapon is already equipped, unequip that first
-            if (meleeCombatStats.equippedWeapon != null)
-                unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
             if (rangedCombatStats.equippedWeapon != null)
+            {
+                pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
+            }
+            if (meleeCombatStats.equippedWeapon != null)
+            {
+                pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
+                unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
+            }
 
             pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             meleeCombatStats.equippedWeapon = item;
@@ -151,9 +157,15 @@ public class ItemSystem extends EntitySystem
         {
             // If a weapon is already equipped, unequip that first
             if (rangedCombatStats.equippedWeapon != null)
+            {
+                pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
+            }
             if (meleeCombatStats.equippedWeapon != null)
+            {
+                pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
+            }
 
             pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             rangedCombatStats.equippedWeapon = item;
@@ -170,9 +182,15 @@ public class ItemSystem extends EntitySystem
         {
             // If a weapon is already equipped, unequip that first
             if (meleeCombatStats.equippedShield != null)
+            {
+                pickupMapper.get(meleeCombatStats.equippedShield).equipped = false;
                 unequip(useRequest.requester, meleeCombatStats.equippedShield);
+            }
             if (rangedCombatStats.equippedShield != null)
+            {
+                pickupMapper.get(rangedCombatStats.equippedShield).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedShield);
+            }
 
             pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             meleeCombatStats.equippedShield = item;
@@ -185,6 +203,9 @@ public class ItemSystem extends EntitySystem
         // If the use request is for a health potion drink it
         if (healingPotionStats != null)
         {
+            if (healingPotionStats.usesLeft <= 0)
+                return;
+
             Health health = healthMapper.get(useRequest.requester);
 
             if (health != null)
