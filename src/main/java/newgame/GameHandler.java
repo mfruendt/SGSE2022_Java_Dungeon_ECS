@@ -89,7 +89,6 @@ public class GameHandler extends MainController implements HeroObserver
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem(engine);
         ItemSystem itemSystem = new ItemSystem(engine);
-        //CollisionSystem collisionSystem = new CollisionSystem();
         CameraSystem cameraSystem = new CameraSystem(cameraEntity);
         PlayerControlSystem playerControlSystem = new PlayerControlSystem(engine);
         engine.addSystem(spriteSystem);
@@ -100,7 +99,6 @@ public class GameHandler extends MainController implements HeroObserver
         engine.addSystem(itemSystem);
         engine.addSystem(knockbackSystem);
         engine.addSystem(guiSystem);
-        //engine.addSystem(collisionSystem);
         engine.addSystem(playerControlSystem);
         engine.addSystem(cameraSystem);
 
@@ -460,7 +458,6 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add(heroPosition);
         heroEntity.add(new Animation(CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_RUN_R), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_L), CharacterAnimations.getAnimation(CharacterAnimations.Animations.HERO_M_IDLE_R)));
         heroEntity.add(new Velocity());
-        heroEntity.add(new Collisions());
         heroEntity.add(new PlayerControl(0.2f));
         heroEntity.add(new Player());
         heroEntity.add(new Inventory(10));
