@@ -9,6 +9,7 @@ import newgame.Components.Items.RangedWeaponStats;
 import newgame.Components.Items.ShieldStats;
 import newgame.Components.Items.MeleeWeaponStats;
 import newgame.Components.Tags.Pickup;
+import newgame.EntityMapper;
 
 public class ItemSystem extends EntitySystem
 {
@@ -17,21 +18,6 @@ public class ItemSystem extends EntitySystem
     private ImmutableArray<Entity> useRequests;
     private ImmutableArray<Entity> destroyRequests;
     private ImmutableArray<Entity> pickupableEntities;
-
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<Pickup> pickupMapper = ComponentMapper.getFor(Pickup.class);
-    private final ComponentMapper<PickupRequest> pickupRequestMapper = ComponentMapper.getFor(PickupRequest.class);
-    private final ComponentMapper<DropRequest> dropRequestMapper = ComponentMapper.getFor(DropRequest.class);
-    private final ComponentMapper<UseRequest> useRequestMapper = ComponentMapper.getFor(UseRequest.class);
-    private final ComponentMapper<ItemDestroyRequest> destroyRequestMapper = ComponentMapper.getFor(ItemDestroyRequest.class);
-    private final ComponentMapper<Inventory> inventoryMapper = ComponentMapper.getFor(Inventory.class);
-    private final ComponentMapper<MeleeWeaponStats> meleeWeaponStatsMapper = ComponentMapper.getFor(MeleeWeaponStats.class);
-    private final ComponentMapper<RangedWeaponStats> rangedWeaponStatsMapper = ComponentMapper.getFor(RangedWeaponStats.class);
-    private final ComponentMapper<ShieldStats> shieldStatsMapper = ComponentMapper.getFor(ShieldStats.class);
-    private final ComponentMapper<HealingPotionStats> healthPotionStatsMapper = ComponentMapper.getFor(HealingPotionStats.class);
-    private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
-    private final ComponentMapper<RangedCombatStats> rangedCombatStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
-    private final ComponentMapper<MeleeCombatStats> meleeCombatStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
 
     private final Engine engine;
     private static final float PICKUP_RANGE = 0.5f;
@@ -62,9 +48,9 @@ public class ItemSystem extends EntitySystem
             {
                 Entity pickup = pickupableEntities.get(j);
 
-                if (checkContact(positionMapper.get(request), positionMapper.get(pickup)))
+                if (checkContact(EntityMapper.positionMapper.get(request), EntityMapper.positionMapper.get(pickup)))
                 {
-                    addPickupToInventory(pickupRequestMapper.get(request).requester, pickup);
+                    addPickupToInventory(EntityMapper.pickupRequestMapper.get(request).requester, pickup);
 
                     break;
                 }
@@ -103,14 +89,14 @@ public class ItemSystem extends EntitySystem
 
     private void destroy(Entity request)
     {
-        ItemDestroyRequest destroyRequest = destroyRequestMapper.get(request);
+        ItemDestroyRequest destroyRequest = EntityMapper.destroyRequestMapper.get(request);
         removeItemAt(destroyRequest.owner, destroyRequest.slot);
     }
 
     private void use(Entity request)
     {
-        UseRequest useRequest = useRequestMapper.get(request);
-        Inventory inventory = inventoryMapper.get(useRequest.requester);
+        UseRequest useRequest = EntityMapper.useRequestMapper.get(request);
+        Inventory inventory = EntityMapper.inventoryMapper.get(useRequest.requester);
 
         if (inventory == null)
             return;
@@ -120,12 +106,12 @@ public class ItemSystem extends EntitySystem
 
         Entity item = inventory.items.get(useRequest.slot);
 
-        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(useRequest.requester);
-        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(useRequest.requester);
-        MeleeWeaponStats meleeWeaponStats = meleeWeaponStatsMapper.get(item);
-        RangedWeaponStats rangedWeaponStats = rangedWeaponStatsMapper.get(item);
-        ShieldStats shieldStats = shieldStatsMapper.get(item);
-        HealingPotionStats healingPotionStats = healthPotionStatsMapper.get(item);
+        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(useRequest.requester);
+        RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(useRequest.requester);
+        MeleeWeaponStats meleeWeaponStats = EntityMapper.meleeWeaponStatsMapper.get(item);
+        RangedWeaponStats rangedWeaponStats = EntityMapper.rangedWeaponStatsMapper.get(item);
+        ShieldStats shieldStats = EntityMapper.shieldMapper.get(item);
+        HealingPotionStats healingPotionStats = EntityMapper.healthPotionStatsMapper.get(item);
 
         // If the use request is for a melee weapon equip it
         if (meleeWeaponStats != null)
@@ -133,16 +119,16 @@ public class ItemSystem extends EntitySystem
             // If a weapon is already equipped, unequip that first
             if (rangedCombatStats.equippedWeapon != null)
             {
-                pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
+                EntityMapper.pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
             }
             if (meleeCombatStats.equippedWeapon != null)
             {
-                pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
+                EntityMapper.pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
             }
 
-            pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
+            EntityMapper.pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             meleeCombatStats.equippedWeapon = item;
 
             meleeCombatStats.attackCooldown += meleeWeaponStats.cooldown;
@@ -158,16 +144,16 @@ public class ItemSystem extends EntitySystem
             // If a weapon is already equipped, unequip that first
             if (rangedCombatStats.equippedWeapon != null)
             {
-                pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
+                EntityMapper.pickupMapper.get(rangedCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedWeapon);
             }
             if (meleeCombatStats.equippedWeapon != null)
             {
-                pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
+                EntityMapper.pickupMapper.get(meleeCombatStats.equippedWeapon).equipped = false;
                 unequip(useRequest.requester, meleeCombatStats.equippedWeapon);
             }
 
-            pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
+            EntityMapper.pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             rangedCombatStats.equippedWeapon = item;
 
             rangedCombatStats.attackCooldown += rangedWeaponStats.cooldown;
@@ -183,16 +169,16 @@ public class ItemSystem extends EntitySystem
             // If a weapon is already equipped, unequip that first
             if (meleeCombatStats.equippedShield != null)
             {
-                pickupMapper.get(meleeCombatStats.equippedShield).equipped = false;
+                EntityMapper.pickupMapper.get(meleeCombatStats.equippedShield).equipped = false;
                 unequip(useRequest.requester, meleeCombatStats.equippedShield);
             }
             if (rangedCombatStats.equippedShield != null)
             {
-                pickupMapper.get(rangedCombatStats.equippedShield).equipped = false;
+                EntityMapper.pickupMapper.get(rangedCombatStats.equippedShield).equipped = false;
                 unequip(useRequest.requester, rangedCombatStats.equippedShield);
             }
 
-            pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
+            EntityMapper.pickupMapper.get(inventory.items.get(useRequest.slot)).equipped = true;
             meleeCombatStats.equippedShield = item;
             rangedCombatStats.equippedShield = item;
 
@@ -206,7 +192,7 @@ public class ItemSystem extends EntitySystem
             if (healingPotionStats.usesLeft <= 0)
                 return;
 
-            Health health = healthMapper.get(useRequest.requester);
+            Health health = EntityMapper.healthMapper.get(useRequest.requester);
 
             if (health != null)
             {
@@ -231,9 +217,9 @@ public class ItemSystem extends EntitySystem
 
     private void dropPickupFromInventory(Entity request)
     {
-        DropRequest dropRequest = dropRequestMapper.get(request);
-        Position position = positionMapper.get(request);
-        Inventory inventory = inventoryMapper.get(dropRequest.requester);
+        DropRequest dropRequest = EntityMapper.dropRequestMapper.get(request);
+        Position position = EntityMapper.positionMapper.get(request);
+        Inventory inventory = EntityMapper.inventoryMapper.get(dropRequest.requester);
 
         if (inventory == null)
             return;
@@ -242,7 +228,7 @@ public class ItemSystem extends EntitySystem
             return;
 
         inventory.items.get(dropRequest.slot).add(new Position(position));
-        pickupMapper.get(inventory.items.get(dropRequest.slot)).slot = -1;
+        EntityMapper.pickupMapper.get(inventory.items.get(dropRequest.slot)).slot = -1;
 
         removeItemAt(dropRequest.requester, dropRequest.slot);
     }
@@ -252,7 +238,7 @@ public class ItemSystem extends EntitySystem
         if (requester == null || pickup == null)
             return;
 
-        Inventory inventory = inventoryMapper.get(requester);
+        Inventory inventory = EntityMapper.inventoryMapper.get(requester);
 
         if (inventory == null)
             return;
@@ -264,7 +250,7 @@ public class ItemSystem extends EntitySystem
                 if (inventory.items.get(i) == null)
                 {
                     inventory.items.add(i, pickup);
-                    pickupMapper.get(pickup).slot = i;
+                    EntityMapper.pickupMapper.get(pickup).slot = i;
                     break;
                 }
             }
@@ -277,7 +263,7 @@ public class ItemSystem extends EntitySystem
 
     private void removeItemAt(Entity inventoryOwner, int slot)
     {
-        Inventory inventory = inventoryMapper.get(inventoryOwner);
+        Inventory inventory = EntityMapper.inventoryMapper.get(inventoryOwner);
 
         if (inventory == null)
             return;
@@ -288,22 +274,22 @@ public class ItemSystem extends EntitySystem
         Entity destroyedItem = inventory.items.get(slot);
         unequip(inventoryOwner, destroyedItem);
 
-        pickupMapper.get(inventory.items.get(slot)).equipped = false;
+        EntityMapper.pickupMapper.get(inventory.items.get(slot)).equipped = false;
         inventory.usedSize--;
         inventory.items.set(slot, null);
     }
 
     private void unequip(Entity owner, Entity equipment)
     {
-        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(owner);
-        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(owner);
+        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(owner);
+        RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(owner);
 
         if (equipment == null)
             return;
 
         if (equipment == meleeCombatStats.equippedWeapon)
         {
-            MeleeWeaponStats meleeWeaponStats = meleeWeaponStatsMapper.get(equipment);
+            MeleeWeaponStats meleeWeaponStats = EntityMapper.meleeWeaponStatsMapper.get(equipment);
 
             meleeCombatStats.attackRange -= meleeWeaponStats.range;
             meleeCombatStats.damage -= meleeWeaponStats.damage;
@@ -315,7 +301,7 @@ public class ItemSystem extends EntitySystem
 
         if (equipment == rangedCombatStats.equippedWeapon)
         {
-            RangedWeaponStats rangedWeaponStats = rangedWeaponStatsMapper.get(equipment);
+            RangedWeaponStats rangedWeaponStats = EntityMapper.rangedWeaponStatsMapper.get(equipment);
 
             rangedCombatStats.attackSpeed -= rangedWeaponStats.attackSpeed;
             rangedCombatStats.damage -= rangedWeaponStats.damage;
@@ -327,7 +313,7 @@ public class ItemSystem extends EntitySystem
 
         if (equipment == meleeCombatStats.equippedShield)
         {
-            ShieldStats shieldStats = shieldStatsMapper.get(equipment);
+            ShieldStats shieldStats = EntityMapper.shieldMapper.get(equipment);
 
             meleeCombatStats.protection -= shieldStats.protection;
             meleeCombatStats.equippedShield = null;
@@ -335,7 +321,7 @@ public class ItemSystem extends EntitySystem
 
         if (equipment == rangedCombatStats.equippedShield)
         {
-            ShieldStats shieldStats = shieldStatsMapper.get(equipment);
+            ShieldStats shieldStats = EntityMapper.shieldMapper.get(equipment);
 
             rangedCombatStats.protection -= shieldStats.protection;
             rangedCombatStats.equippedShield = null;

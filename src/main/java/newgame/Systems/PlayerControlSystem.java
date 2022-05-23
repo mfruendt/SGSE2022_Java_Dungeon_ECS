@@ -6,18 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import newgame.Components.*;
 import newgame.Components.Events.*;
-import newgame.Components.Items.MeleeWeaponStats;
+import newgame.EntityMapper;
 import newgame.textures.WeaponTextures;
 
 public class PlayerControlSystem extends EntitySystem
 {
     private ImmutableArray<Entity> controllableEntities;
-
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
-    private final ComponentMapper<MeleeCombatStats> meleeWeaponStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
-    private final ComponentMapper<RangedCombatStats> rangedWeaponStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
-    private final ComponentMapper<PlayerControl> playerControlMapper = ComponentMapper.getFor(PlayerControl.class);
 
     private final Engine engine;
 
@@ -40,9 +34,9 @@ public class PlayerControlSystem extends EntitySystem
             Entity controllableEntity = controllableEntities.get(i);
 
             move(controllableEntity);
-            if (meleeWeaponStatsMapper.get(controllableEntity) != null)
+            if (EntityMapper.meleeCombatStatsMapper.get(controllableEntity) != null)
                 meleeAttack(controllableEntity);
-            if (rangedWeaponStatsMapper.get(controllableEntity) != null)
+            if (EntityMapper.rangedCombatStatsMapper.get(controllableEntity) != null)
                 rangedAttack(controllableEntity);
             handleItemInput(controllableEntity);
         }
@@ -52,7 +46,7 @@ public class PlayerControlSystem extends EntitySystem
     {
         if (Gdx.input.isKeyPressed(PlayerControl.pickupKey))
         {
-            engine.addEntity(new Entity().add(new PickupRequest(entity)).add(new Position(positionMapper.get(entity))));
+            engine.addEntity(new Entity().add(new PickupRequest(entity)).add(new Position(EntityMapper.positionMapper.get(entity))));
         }
 
         if (Gdx.input.isKeyPressed(PlayerControl.dropKey))
@@ -61,7 +55,7 @@ public class PlayerControlSystem extends EntitySystem
 
             if (invSlot != -1)
             {
-                engine.addEntity(new Entity().add(new DropRequest(entity, invSlot)).add(new Position(positionMapper.get(entity))));
+                engine.addEntity(new Entity().add(new DropRequest(entity, invSlot)).add(new Position(EntityMapper.positionMapper.get(entity))));
             }
         }
 
@@ -124,8 +118,8 @@ public class PlayerControlSystem extends EntitySystem
 
     private void move(Entity entity)
     {
-        Velocity velocity = velocityMapper.get(entity);
-        PlayerControl playerControl = playerControlMapper.get(entity);
+        Velocity velocity = EntityMapper.velocityMapper.get(entity);
+        PlayerControl playerControl = EntityMapper.playerControlMapper.get(entity);
 
         if (Gdx.input.isKeyPressed(PlayerControl.walkForwardKey))
         {
@@ -156,8 +150,8 @@ public class PlayerControlSystem extends EntitySystem
 
     private void meleeAttack(Entity entity)
     {
-        Position position = positionMapper.get(entity);
-        MeleeCombatStats meleeCombatStats = meleeWeaponStatsMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
+        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(entity);
 
         if (meleeCombatStats == null)
             return;
@@ -196,8 +190,8 @@ public class PlayerControlSystem extends EntitySystem
 
     private void rangedAttack(Entity entity)
     {
-        Position position = positionMapper.get(entity);
-        RangedCombatStats rangedCombatStats = rangedWeaponStatsMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
+        RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(entity);
 
         if (rangedCombatStats == null)
             return;

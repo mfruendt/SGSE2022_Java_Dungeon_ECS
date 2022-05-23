@@ -9,16 +9,12 @@ import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.Animation;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
+import newgame.EntityMapper;
 
 public class SpriteSystem extends EntitySystem
 {
     private ImmutableArray<Entity> animatableEntities;
     private ImmutableArray<Entity> drawableEntities;
-
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
-    private final ComponentMapper<Animation> animationMapper = ComponentMapper.getFor(Animation.class);
-    private final ComponentMapper<newgame.Components.Sprite> spriteMapper = ComponentMapper.getFor(newgame.Components.Sprite.class);
 
     @Override
     public void addedToEngine(Engine engine)
@@ -43,17 +39,17 @@ public class SpriteSystem extends EntitySystem
 
     private void drawSprite(Entity entity)
     {
-        Position position = positionMapper.get(entity);
-        newgame.Components.Sprite sprite = spriteMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
+        newgame.Components.Sprite sprite = EntityMapper.spriteMapper.get(entity);
 
         drawSprite(sprite.sprite.getHeight() / sprite.sprite.getWidth(), sprite.sprite, new Point(position.x, position.y));
     }
 
     private void drawAnimation(Entity entity)
     {
-        Velocity velocity = velocityMapper.get(entity);
-        Animation animation = animationMapper.get(entity);
-        Position position = positionMapper.get(entity);
+        Velocity velocity = EntityMapper.velocityMapper.get(entity);
+        Animation animation = EntityMapper.animationMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
         Texture texture;
 
         if (velocity.x < 0f)

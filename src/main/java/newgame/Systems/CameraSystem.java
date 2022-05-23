@@ -5,13 +5,12 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.Tags.Player;
 import newgame.Components.Position;
+import newgame.EntityMapper;
 import newgame.characters.Camera;
 
 public class CameraSystem extends EntitySystem
 {
     private ImmutableArray<Entity> followableEntities;
-
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
 
     private Camera camera;
 
@@ -33,7 +32,7 @@ public class CameraSystem extends EntitySystem
         {
             Entity entity = followableEntities.get(0);
 
-            Position position = positionMapper.get(entity);
+            Position position = EntityMapper.positionMapper.get(entity);
 
             camera.setPosition(new Point(position.x, position.y));
         }

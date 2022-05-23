@@ -6,16 +6,13 @@ import newgame.Components.Experience;
 import newgame.Components.Health;
 import newgame.Components.Inventory;
 import newgame.Components.Tags.Player;
+import newgame.EntityMapper;
 import newgame.Factories.HeroFactory;
 import newgame.gui.HudHandler;
 
 public class GuiSystem extends EntitySystem
 {
     private ImmutableArray<Entity> monitorableEntities;
-
-    private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
-    private final ComponentMapper<Experience> experienceMapper = ComponentMapper.getFor(Experience.class);
-    private final ComponentMapper<Inventory> inventoryMapper = ComponentMapper.getFor(Inventory.class);
 
     private HudHandler hudHandler;
 
@@ -33,11 +30,11 @@ public class GuiSystem extends EntitySystem
         {
             Entity entity = monitorableEntities.get(0);
 
-            Health health = healthMapper.get(entity);
-            Experience experience = experienceMapper.get(entity);
+            Health health = EntityMapper.healthMapper.get(entity);
+            Experience experience = EntityMapper.experienceMapper.get(entity);
 
             hudHandler.update(health, experience);
-            hudHandler.updateInventory(inventoryMapper.get(entity));
+            hudHandler.updateInventory(EntityMapper.inventoryMapper.get(entity));
         }
     }
 }

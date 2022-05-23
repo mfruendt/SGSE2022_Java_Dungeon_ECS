@@ -5,14 +5,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.*;
 import newgame.Components.Events.Knockback;
 import newgame.Components.Tags.Player;
+import newgame.EntityMapper;
 
 public class KnockbackSystem extends EntitySystem
 {
     private ImmutableArray<Entity> knockbackedEntities;
-
-    private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
-    private final ComponentMapper<Knockback> knockbackMapper = ComponentMapper.getFor(Knockback.class);
-    private final ComponentMapper<Player> playerMapper = ComponentMapper.getFor(Player.class);
 
     @Override
     public void addedToEngine(Engine engine)
@@ -27,8 +24,8 @@ public class KnockbackSystem extends EntitySystem
         {
             Entity entity = knockbackedEntities.get(i);
 
-            Knockback knockback = knockbackMapper.get(entity);
-            Velocity velocity = velocityMapper.get(entity);
+            Knockback knockback = EntityMapper.knockbackMapper.get(entity);
+            Velocity velocity = EntityMapper.velocityMapper.get(entity);
 
             if (knockback.knockbackFrames > 0)
             {
@@ -60,7 +57,7 @@ public class KnockbackSystem extends EntitySystem
 
             if (knockback.knockbackFrames == 0)
             {
-                if (playerMapper.get(entity) != null)
+                if (EntityMapper.playerMapper.get(entity) != null)
                     entity.add(new PlayerControl(0.2f));
 
                 entity.remove(Knockback.class);

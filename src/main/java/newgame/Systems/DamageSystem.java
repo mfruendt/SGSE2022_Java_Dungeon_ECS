@@ -14,6 +14,7 @@ import newgame.Components.Items.MeleeWeaponStats;
 import newgame.Components.Tags.PassiveKi;
 import newgame.Components.Tags.Pickup;
 import newgame.Components.Tags.Player;
+import newgame.EntityMapper;
 import newgame.logger.GameEventsLogger;
 import newgame.logger.LogMessages;
 
@@ -22,20 +23,6 @@ public class DamageSystem extends EntitySystem
     private ImmutableArray<Entity> damageableEntities;
     private ImmutableArray<Entity> meleeAttackEntities;
     private ImmutableArray<Entity> rangedAttackEntities;
-
-    private final ComponentMapper<Health> healthMapper = ComponentMapper.getFor(Health.class);
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<MeleeAttack> meleeAttackMapper = ComponentMapper.getFor(MeleeAttack.class);
-    private final ComponentMapper<RangedAttack> rangedAttackMapper = ComponentMapper.getFor(RangedAttack.class);
-    private final ComponentMapper<HostileKi> hostileKiMapper = ComponentMapper.getFor(HostileKi.class);
-    private final ComponentMapper<PassiveKi> passiveKiMapper = ComponentMapper.getFor(PassiveKi.class);
-    private final ComponentMapper<Player> playerMapper = ComponentMapper.getFor(Player.class);
-    private final ComponentMapper<MeleeWeaponStats> meleeWeaponMapper = ComponentMapper.getFor(MeleeWeaponStats.class);
-    private final ComponentMapper<RangedWeaponStats> rangedWeaponMapper = ComponentMapper.getFor(RangedWeaponStats.class);
-    private final ComponentMapper<ShieldStats> shieldMapper = ComponentMapper.getFor(ShieldStats.class);
-    private final ComponentMapper<MeleeCombatStats> meleeCombatStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
-    private final ComponentMapper<RangedCombatStats> rangedCombatStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
-    private final ComponentMapper<Pickup> pickupMapper = ComponentMapper.getFor(Pickup.class);
 
     private final Engine engine;
 
@@ -58,26 +45,26 @@ public class DamageSystem extends EntitySystem
         for (int i = 0; i < meleeAttackEntities.size(); i++)
         {
             Entity attackEntity = meleeAttackEntities.get(i);
-            MeleeAttack attack = meleeAttackMapper.get(attackEntity);
+            MeleeAttack attack = EntityMapper.meleeAttackMapper.get(attackEntity);
 
             for (int j = 0; j < damageableEntities.size(); j++)
             {
                 Entity damagedEntity = damageableEntities.get(j);
 
-                if (damagedEntity != attack.attacker && checkMeleeCollision(attack, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
+                if (damagedEntity != attack.attacker && checkMeleeCollision(attack, EntityMapper.positionMapper.get(attackEntity), EntityMapper.positionMapper.get(damagedEntity)))
                 {
                     if (executeMeleeAttack(damagedEntity, attack))
                     {
-                        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(attack.attacker);
+                        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(attack.attacker);
 
                         if (meleeCombatStats.equippedWeapon != null)
                         {
-                            MeleeWeaponStats meleeWeaponStats = meleeWeaponMapper.get(meleeCombatStats.equippedWeapon);
+                            MeleeWeaponStats meleeWeaponStats = EntityMapper.meleeWeaponStatsMapper.get(meleeCombatStats.equippedWeapon);
 
                             meleeWeaponStats.usesLeft--;
 
                             if (meleeWeaponStats.usesLeft == 0)
-                                engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, pickupMapper.get(meleeCombatStats.equippedWeapon).slot)));
+                                engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, EntityMapper.pickupMapper.get(meleeCombatStats.equippedWeapon).slot)));
                         }
 
                         break;
@@ -91,13 +78,13 @@ public class DamageSystem extends EntitySystem
         for (int i = 0; i < rangedAttackEntities.size(); i++)
         {
             Entity attackEntity = rangedAttackEntities.get(i);
-            RangedAttack attack = rangedAttackMapper.get(attackEntity);
+            RangedAttack attack = EntityMapper.rangedAttackMapper.get(attackEntity);
 
             for (int j = 0; j < damageableEntities.size(); j++)
             {
                 Entity damagedEntity = damageableEntities.get(j);
 
-                if (damagedEntity != attack.attacker && checkCollision(attack.bulletRange, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
+                if (damagedEntity != attack.attacker && checkCollision(attack.bulletRange, EntityMapper.positionMapper.get(attackEntity), EntityMapper.positionMapper.get(damagedEntity)))
                 {
                     if (executeRangedAttack(damagedEntity, attack))
                         break;
@@ -108,16 +95,16 @@ public class DamageSystem extends EntitySystem
 
             if (attack.attackDurationLeft <= 0 || attack.hasHit)
             {
-                RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(attack.attacker);
+                RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(attack.attacker);
 
                 if (rangedCombatStats.equippedWeapon != null)
                 {
-                    RangedWeaponStats rangedWeaponStats = rangedWeaponMapper.get(rangedCombatStats.equippedWeapon);
+                    RangedWeaponStats rangedWeaponStats = EntityMapper.rangedWeaponMapper.get(rangedCombatStats.equippedWeapon);
 
                     rangedWeaponStats.usesLeft--;
 
                     if (rangedWeaponStats.usesLeft == 0)
-                        engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, pickupMapper.get(rangedCombatStats.equippedWeapon).slot)));
+                        engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, EntityMapper.pickupMapper.get(rangedCombatStats.equippedWeapon).slot)));
                 }
 
                 engine.removeEntity(attackEntity);
@@ -127,10 +114,10 @@ public class DamageSystem extends EntitySystem
 
     private boolean executeRangedAttack(Entity damagedEntity, RangedAttack attack)
     {
-        HostileKi hostileKi = hostileKiMapper.get(damagedEntity);
-        PassiveKi passiveKi = passiveKiMapper.get(damagedEntity);
-        Player player = playerMapper.get(damagedEntity);
-        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(damagedEntity);
+        HostileKi hostileKi = EntityMapper.hostileKiMapper.get(damagedEntity);
+        PassiveKi passiveKi = EntityMapper.passiveKiMapper.get(damagedEntity);
+        Player player = EntityMapper.playerMapper.get(damagedEntity);
+        RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(damagedEntity);
 
         if (attack.receiver == RangedAttack.Receiver.HOSTILE)
         {
@@ -145,23 +132,23 @@ public class DamageSystem extends EntitySystem
                 if (rangedCombatStats != null)
                 {
                     if (attack.damage > rangedCombatStats.protection)
-                        healthMapper.get(damagedEntity).currentHealth -= attack.damage - rangedCombatStats.protection;
+                        EntityMapper.healthMapper.get(damagedEntity).currentHealth -= attack.damage - rangedCombatStats.protection;
 
                     if (rangedCombatStats.equippedShield != null)
                     {
-                        ShieldStats shieldStats = shieldMapper.get(rangedCombatStats.equippedShield);
+                        ShieldStats shieldStats = EntityMapper.shieldMapper.get(rangedCombatStats.equippedShield);
 
                         shieldStats.usesLeft--;
 
                         if (shieldStats.usesLeft == 0)
-                            engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, pickupMapper.get(rangedCombatStats.equippedShield).slot)));
+                            engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, EntityMapper.pickupMapper.get(rangedCombatStats.equippedShield).slot)));
                     }
                 }
                 else
                 {
-                    healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                    EntityMapper.healthMapper.get(damagedEntity).currentHealth -= attack.damage;
                 }
-                healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
+                EntityMapper.healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
                 GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
                 attack.hasHit = true;
                 return true;
@@ -173,10 +160,10 @@ public class DamageSystem extends EntitySystem
 
     private boolean executeMeleeAttack(Entity damagedEntity, MeleeAttack attack)
     {
-        HostileKi hostileKi = hostileKiMapper.get(damagedEntity);
-        PassiveKi passiveKi = passiveKiMapper.get(damagedEntity);
-        Player player = playerMapper.get(damagedEntity);
-        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(damagedEntity);
+        HostileKi hostileKi = EntityMapper.hostileKiMapper.get(damagedEntity);
+        PassiveKi passiveKi = EntityMapper.passiveKiMapper.get(damagedEntity);
+        Player player = EntityMapper.playerMapper.get(damagedEntity);
+        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(damagedEntity);
 
         if (attack.receiver == MeleeAttack.Receiver.HOSTILE && (passiveKi != null || hostileKi != null))
         {
@@ -188,23 +175,23 @@ public class DamageSystem extends EntitySystem
             if (meleeCombatStats != null)
             {
                 if (attack.damage > meleeCombatStats.protection)
-                    healthMapper.get(damagedEntity).currentHealth -= attack.damage - meleeCombatStats.protection;
+                    EntityMapper.healthMapper.get(damagedEntity).currentHealth -= attack.damage - meleeCombatStats.protection;
 
                 if (meleeCombatStats.equippedShield != null)
                 {
-                    ShieldStats shieldStats = shieldMapper.get(meleeCombatStats.equippedShield);
+                    ShieldStats shieldStats = EntityMapper.shieldMapper.get(meleeCombatStats.equippedShield);
 
                     shieldStats.usesLeft--;
 
                     if (shieldStats.usesLeft == 0)
-                        engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, pickupMapper.get(meleeCombatStats.equippedShield).slot)));
+                        engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, EntityMapper.pickupMapper.get(meleeCombatStats.equippedShield).slot)));
                 }
             }
             else
             {
-                healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                EntityMapper.healthMapper.get(damagedEntity).currentHealth -= attack.damage;
             }
-            healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
+            EntityMapper.healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
             GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
             damagedEntity.remove(PlayerControl.class);
 
@@ -235,7 +222,7 @@ public class DamageSystem extends EntitySystem
 
     private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage, float protection, Entity attacker)
     {
-        Health health = healthMapper.get(damagedEntity);
+        Health health = EntityMapper.healthMapper.get(damagedEntity);
 
         if (passiveKi != null)
         {

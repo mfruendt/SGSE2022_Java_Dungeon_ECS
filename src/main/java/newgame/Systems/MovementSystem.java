@@ -5,13 +5,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.Position;
 import newgame.Components.Velocity;
+import newgame.EntityMapper;
 
 public class MovementSystem extends EntitySystem
 {
     private ImmutableArray<Entity> movableEntities;
-
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
 
     @Override
     public void addedToEngine(Engine engine)
@@ -30,8 +28,8 @@ public class MovementSystem extends EntitySystem
 
     private void move(Entity entity)
     {
-        Velocity velocity = velocityMapper.get(entity);
-        Position position = positionMapper.get(entity);
+        Velocity velocity = EntityMapper.velocityMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
 
         if (position.level.isTileAccessible(new Point(position.x, position.y + velocity.y)))
         {

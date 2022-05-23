@@ -10,6 +10,7 @@ import newgame.Components.Events.RangedAttack;
 import newgame.Components.Tags.HostileKi;
 import newgame.Components.Tags.PassiveKi;
 import newgame.Components.Tags.Player;
+import newgame.EntityMapper;
 import newgame.textures.WeaponTextures;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -20,12 +21,7 @@ public class KiSystem extends EntitySystem
     private ImmutableArray<Entity> hostileEntities;
     private ImmutableArray<Entity> playerEntities;
 
-    private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
-    private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
-    private final ComponentMapper<MeleeCombatStats> meleeCombatStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
-    private final ComponentMapper<RangedCombatStats> rangedCombatStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
-    private final ComponentMapper<PassiveKi> easyKiMapper = ComponentMapper.getFor(PassiveKi.class);
-    private final ComponentMapper<HostileKi> hardKiMapper = ComponentMapper.getFor(HostileKi.class);
+
 
     private Engine engine;
 
@@ -55,13 +51,13 @@ public class KiSystem extends EntitySystem
 
     private void checkForAttackContact(Entity entity)
     {
-        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(entity);
-        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(entity);
-        Position position = positionMapper.get(entity);
+        RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(entity);
+        MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
 
         for (int i = 0; i < playerEntities.size(); i++)
         {
-            Position targetPosition = positionMapper.get(playerEntities.get(i));
+            Position targetPosition = EntityMapper.positionMapper.get(playerEntities.get(i));
 
             if (meleeCombatStats.framesSinceLastAttack > 0)
             {
@@ -109,9 +105,9 @@ public class KiSystem extends EntitySystem
 
     private void calcMovementToTarget(Entity entity)
     {
-        Velocity velocity = velocityMapper.get(entity);
-        HostileKi ki = hardKiMapper.get(entity);
-        Position position = positionMapper.get(entity);
+        Velocity velocity = EntityMapper.velocityMapper.get(entity);
+        HostileKi ki = EntityMapper.hostileKiMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
 
         boolean canMoveInX = false;
         boolean canMoveInY = false;
@@ -187,9 +183,9 @@ public class KiSystem extends EntitySystem
 
     private void calcRandomMovement(Entity entity)
     {
-        Velocity velocity = velocityMapper.get(entity);
-        PassiveKi ki = easyKiMapper.get(entity);
-        Position position = positionMapper.get(entity);
+        Velocity velocity = EntityMapper.velocityMapper.get(entity);
+        PassiveKi ki = EntityMapper.easyKiMapper.get(entity);
+        Position position = EntityMapper.positionMapper.get(entity);
 
         boolean hasMoved = false;
 
