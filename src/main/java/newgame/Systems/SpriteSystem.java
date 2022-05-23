@@ -26,6 +26,8 @@ public class SpriteSystem extends EntitySystem
     @Override
     public void update(float deltaTime)
     {
+        GameSetup.batch.begin();
+
         for (int i = 0; i < animatableEntities.size(); i++)
         {
             drawAnimation(animatableEntities.get(i));
@@ -35,6 +37,8 @@ public class SpriteSystem extends EntitySystem
         {
             drawSprite(drawableEntities.get(i));
         }
+
+        GameSetup.batch.end();
     }
 
     private void drawSprite(Entity entity)
@@ -83,8 +87,6 @@ public class SpriteSystem extends EntitySystem
     {
         sprite.setSize(1.0f, yScaling);
         sprite.setPosition(position.x - 0.85f, position.y - 0.5f);
-        GameSetup.batch.begin();
         sprite.draw(GameSetup.batch);
-        GameSetup.batch.end();
     }
 }
