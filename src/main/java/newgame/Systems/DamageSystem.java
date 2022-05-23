@@ -3,8 +3,17 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.*;
+import newgame.Components.Events.ItemDestroyRequest;
+import newgame.Components.Events.Knockback;
+import newgame.Components.Events.MeleeAttack;
+import newgame.Components.Events.RangedAttack;
+import newgame.Components.Items.RangedWeaponStats;
+import newgame.Components.Tags.HostileKi;
+import newgame.Components.Items.ShieldStats;
+import newgame.Components.Items.MeleeWeaponStats;
+import newgame.Components.Tags.PassiveKi;
+import newgame.Components.Tags.Pickup;
 import newgame.Components.Tags.Player;
-import newgame.Factories.MonsterFactory;
 import newgame.logger.GameEventsLogger;
 import newgame.logger.LogMessages;
 
@@ -21,6 +30,12 @@ public class DamageSystem extends EntitySystem
     private final ComponentMapper<HostileKi> hostileKiMapper = ComponentMapper.getFor(HostileKi.class);
     private final ComponentMapper<PassiveKi> passiveKiMapper = ComponentMapper.getFor(PassiveKi.class);
     private final ComponentMapper<Player> playerMapper = ComponentMapper.getFor(Player.class);
+    private final ComponentMapper<MeleeWeaponStats> meleeWeaponMapper = ComponentMapper.getFor(MeleeWeaponStats.class);
+    private final ComponentMapper<RangedWeaponStats> rangedWeaponMapper = ComponentMapper.getFor(RangedWeaponStats.class);
+    private final ComponentMapper<ShieldStats> shieldMapper = ComponentMapper.getFor(ShieldStats.class);
+    private final ComponentMapper<MeleeCombatStats> meleeCombatStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
+    private final ComponentMapper<RangedCombatStats> rangedCombatStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
+    private final ComponentMapper<Pickup> pickupMapper = ComponentMapper.getFor(Pickup.class);
 
     private final Engine engine;
 
@@ -52,7 +67,21 @@ public class DamageSystem extends EntitySystem
                 if (checkMeleeCollision(attack, positionMapper.get(attackEntity), positionMapper.get(damagedEntity)))
                 {
                     if (executeMeleeAttack(damagedEntity, attack))
+                    {
+                        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(attack.attacker);
+
+                        if (meleeCombatStats.equippedWeapon != null)
+                        {
+                            MeleeWeaponStats meleeWeaponStats = meleeWeaponMapper.get(meleeCombatStats.equippedWeapon);
+
+                            meleeWeaponStats.usesLeft--;
+
+                            if (meleeWeaponStats.usesLeft == 0)
+                                engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, pickupMapper.get(meleeCombatStats.equippedWeapon).slot)));
+                        }
+
                         break;
+                    }
                 }
             }
 
@@ -78,7 +107,21 @@ public class DamageSystem extends EntitySystem
             attack.attackDurationLeft--;
 
             if (attack.attackDurationLeft <= 0 || attack.hasHit)
+            {
+                RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(attack.attacker);
+
+                if (rangedCombatStats.equippedWeapon != null)
+                {
+                    RangedWeaponStats rangedWeaponStats = rangedWeaponMapper.get(rangedCombatStats.equippedWeapon);
+
+                    rangedWeaponStats.usesLeft--;
+
+                    if (rangedWeaponStats.usesLeft == 0)
+                        engine.addEntity(new Entity().add(new ItemDestroyRequest(attack.attacker, pickupMapper.get(rangedCombatStats.equippedWeapon).slot)));
+                }
+
                 engine.removeEntity(attackEntity);
+            }
         }
     }
 
@@ -87,10 +130,11 @@ public class DamageSystem extends EntitySystem
         HostileKi hostileKi = hostileKiMapper.get(damagedEntity);
         PassiveKi passiveKi = passiveKiMapper.get(damagedEntity);
         Player player = playerMapper.get(damagedEntity);
+        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(damagedEntity);
 
         if (attack.receiver == RangedAttack.Receiver.HOSTILE)
         {
-            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, attack.attacker);
+            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, rangedCombatStats.protection, attack.attacker);
             attack.hasHit = true;
             return true;
         }
@@ -98,7 +142,25 @@ public class DamageSystem extends EntitySystem
         {
             if (player != null)
             {
-                healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                if (rangedCombatStats != null)
+                {
+                    if (attack.damage > rangedCombatStats.protection)
+                        healthMapper.get(damagedEntity).currentHealth -= attack.damage - rangedCombatStats.protection;
+
+                    if (rangedCombatStats.equippedShield != null)
+                    {
+                        ShieldStats shieldStats = shieldMapper.get(rangedCombatStats.equippedShield);
+
+                        shieldStats.usesLeft--;
+
+                        if (shieldStats.usesLeft == 0)
+                            engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, pickupMapper.get(rangedCombatStats.equippedShield).slot)));
+                    }
+                }
+                else
+                {
+                    healthMapper.get(damagedEntity).currentHealth -= attack.damage;
+                }
                 healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
                 GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
                 attack.hasHit = true;
@@ -114,65 +176,80 @@ public class DamageSystem extends EntitySystem
         HostileKi hostileKi = hostileKiMapper.get(damagedEntity);
         PassiveKi passiveKi = passiveKiMapper.get(damagedEntity);
         Player player = playerMapper.get(damagedEntity);
+        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(damagedEntity);
 
-        if (attack.receiver == MeleeAttack.Receiver.HOSTILE)
+        if (attack.receiver == MeleeAttack.Receiver.HOSTILE && (passiveKi != null || hostileKi != null))
         {
-            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, attack.attacker);
+            damageMonster(passiveKi, hostileKi, damagedEntity, attack.damage, meleeCombatStats.protection, attack.attacker);
             return true;
         }
-        else if (attack.receiver == MeleeAttack.Receiver.PLAYER)
+        else if (attack.receiver == MeleeAttack.Receiver.PLAYER && player != null)
         {
-            if (player != null)
+            if (meleeCombatStats != null)
+            {
+                if (attack.damage > meleeCombatStats.protection)
+                    healthMapper.get(damagedEntity).currentHealth -= attack.damage - meleeCombatStats.protection;
+
+                if (meleeCombatStats.equippedShield != null)
+                {
+                    ShieldStats shieldStats = shieldMapper.get(meleeCombatStats.equippedShield);
+
+                    shieldStats.usesLeft--;
+
+                    if (shieldStats.usesLeft == 0)
+                        engine.addEntity(new Entity().add(new ItemDestroyRequest(damagedEntity, pickupMapper.get(meleeCombatStats.equippedShield).slot)));
+                }
+            }
+            else
             {
                 healthMapper.get(damagedEntity).currentHealth -= attack.damage;
-                healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
-                GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
-                damagedEntity.remove(PlayerControl.class);
-
-                switch (attack.attackDirection)
-                {
-                    case UP:
-                        damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.UP));
-                        break;
-
-                    case DOWN:
-                        damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.DOWN));
-                        break;
-
-                    case RIGHT:
-                        damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.RIGHT));
-                        break;
-
-                    case LEFT:
-                        damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.LEFT));
-                        break;
-                }
-
-                return true;
             }
+            healthMapper.get(damagedEntity).lastAttacker = attack.attacker;
+            GameEventsLogger.getLogger().info(LogMessages.HERO_GOT_DAMAGE.toString());
+            damagedEntity.remove(PlayerControl.class);
+
+            switch (attack.attackDirection)
+            {
+                case UP:
+                    damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.UP));
+                    break;
+
+                case DOWN:
+                    damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.DOWN));
+                    break;
+
+                case RIGHT:
+                    damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.RIGHT));
+                    break;
+
+                case LEFT:
+                    damagedEntity.add(new Knockback(attack.knockbackDuration, attack.knockbackSpeed, Knockback.Direction.LEFT));
+                    break;
+            }
+
+            return true;
         }
 
         return false;
     }
 
-    private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage, Entity attacker)
+    private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage, float protection, Entity attacker)
     {
+        Health health = healthMapper.get(damagedEntity);
+
         if (passiveKi != null)
         {
-            damagedEntity.add(new HostileKi(passiveKi.speed,
-                    MonsterFactory.EASY_MONSTER_DAMAGE,
-                    MonsterFactory.EASY_MONSTER_RANGE,
-                    MonsterFactory.EASY_MONSTER_KNOCKBACK_SPEED,
-                    MonsterFactory.EASY_MONSTER_KNOCKBACK_DURATION,
-                    passiveKi.target));
+            damagedEntity.add(new HostileKi(passiveKi.speed, passiveKi.target));
             damagedEntity.remove(PassiveKi.class);
-            healthMapper.get(damagedEntity).currentHealth -= damage;
-            healthMapper.get(damagedEntity).lastAttacker = attacker;
+            if (damage > protection)
+                health.currentHealth -= damage - protection;
+            health.lastAttacker = attacker;
         }
         else if (hostileKi != null)
         {
-            healthMapper.get(damagedEntity).currentHealth -= damage;
-            healthMapper.get(damagedEntity).lastAttacker = attacker;
+            if (damage > protection)
+                health.currentHealth -= damage - protection;
+            health.lastAttacker = attacker;
         }
     }
 

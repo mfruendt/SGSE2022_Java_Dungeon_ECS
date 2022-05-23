@@ -3,8 +3,7 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.Collisions;
-import newgame.Components.Health;
-import newgame.Components.MeleeAttack;
+import newgame.Components.Events.MeleeAttack;
 import newgame.Components.Position;
 
 public class CollisionSystem extends EntitySystem

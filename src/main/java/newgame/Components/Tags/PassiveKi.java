@@ -1,16 +1,12 @@
-package newgame.Components;
+package newgame.Components.Tags;
 
 import com.badlogic.ashley.core.Component;
+import newgame.Components.Position;
 
 public class PassiveKi implements Component
 {
     public float speed;
     public Position target;
-
-    public PassiveKi()
-    {
-
-    }
 
     public PassiveKi(float speed, Position target)
     {

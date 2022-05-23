@@ -5,6 +5,10 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import de.fhbielefeld.pmdungeon.vorgaben.dungeonCreator.DungeonWorld;
 import de.fhbielefeld.pmdungeon.vorgaben.tools.Point;
 import newgame.Components.*;
+import newgame.Components.Events.MeleeAttack;
+import newgame.Components.Events.RangedAttack;
+import newgame.Components.Tags.HostileKi;
+import newgame.Components.Tags.PassiveKi;
 import newgame.Components.Tags.Player;
 import newgame.textures.WeaponTextures;
 
@@ -18,9 +22,10 @@ public class KiSystem extends EntitySystem
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
+    private final ComponentMapper<MeleeCombatStats> meleeCombatStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
+    private final ComponentMapper<RangedCombatStats> rangedCombatStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
     private final ComponentMapper<PassiveKi> easyKiMapper = ComponentMapper.getFor(PassiveKi.class);
     private final ComponentMapper<HostileKi> hardKiMapper = ComponentMapper.getFor(HostileKi.class);
-    private final ComponentMapper<BossKi> bossKiMapper = ComponentMapper.getFor(BossKi.class);
 
     private Engine engine;
 
@@ -28,9 +33,9 @@ public class KiSystem extends EntitySystem
     public void addedToEngine(Engine engine)
     {
         this.engine = engine;
-        passiveEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class).get());
-        hostileEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class).get());
-        playerEntities = engine.getEntitiesFor(Family.all(Player.class, Position.class, Health.class).get());
+        passiveEntities = engine.getEntitiesFor(Family.all(PassiveKi.class, Velocity.class, Position.class, MeleeCombatStats.class).get());
+        hostileEntities = engine.getEntitiesFor(Family.all(HostileKi.class, Velocity.class, Position.class, MeleeCombatStats.class).get());
+        playerEntities = engine.getEntitiesFor(Family.all(Player.class, Position.class).get());
     }
 
     @Override
@@ -50,52 +55,52 @@ public class KiSystem extends EntitySystem
 
     private void checkForAttackContact(Entity entity)
     {
-        HostileKi ki = hardKiMapper.get(entity);
-        BossKi bossKi = bossKiMapper.get(entity);
+        RangedCombatStats rangedCombatStats = rangedCombatStatsMapper.get(entity);
+        MeleeCombatStats meleeCombatStats = meleeCombatStatsMapper.get(entity);
         Position position = positionMapper.get(entity);
 
         for (int i = 0; i < playerEntities.size(); i++)
         {
             Position targetPosition = positionMapper.get(playerEntities.get(i));
 
-            if (ki.framesSinceLastAttack > 0)
+            if (meleeCombatStats.framesSinceLastAttack > 0)
             {
-                ki.framesSinceLastAttack--;
+                meleeCombatStats.framesSinceLastAttack--;
             }
             else
             {
-                if (Math.abs(targetPosition.x - position.x) <= ki.attackRange && Math.abs(targetPosition.y - position.y) <= ki.attackRange)
+                if (Math.abs(targetPosition.x - position.x) <= meleeCombatStats.attackRange && Math.abs(targetPosition.y - position.y) <= meleeCombatStats.attackRange)
                 {
                     if (Math.abs(targetPosition.x - position.x) > Math.abs(targetPosition.y - position.y))
                     {
                         if (position.x > targetPosition.x)
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.LEFT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(meleeCombatStats.damage, MeleeAttack.AttackDirection.LEFT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                         else
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.RIGHT, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(meleeCombatStats.damage, MeleeAttack.AttackDirection.RIGHT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                     }
                     else
                     {
                         if (position.y > targetPosition.y)
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.DOWN, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(meleeCombatStats.damage, MeleeAttack.AttackDirection.DOWN, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                         else
-                            engine.addEntity(new Entity().add(new MeleeAttack(ki.damage, MeleeAttack.AttackDirection.UP, ki.attackRange, ki.knockbackDuration, ki.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
+                            engine.addEntity(new Entity().add(new MeleeAttack(meleeCombatStats.damage, MeleeAttack.AttackDirection.UP, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.PLAYER, entity)).add(new Position(position)));
                     }
 
-                    ki.framesSinceLastAttack = HostileKi.ATTACK_COOLDOWN;
+                    meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
                 }
-                else if (bossKi != null)
+                else if (rangedCombatStats != null)
                 {
-                    if (Math.abs(targetPosition.x - position.x) <= bossKi.rangedTargetRange && Math.abs(targetPosition.y - position.y) <= bossKi.rangedTargetRange)
+                    if (Math.abs(targetPosition.x - position.x) <= rangedCombatStats.attackRange && Math.abs(targetPosition.y - position.y) <= rangedCombatStats.attackRange)
                     {
                         float distanceX = Math.abs(targetPosition.x - position.x);
                         float distanceY = Math.abs(targetPosition.y - position.y);
 
-                        engine.addEntity(new Entity().add(new RangedAttack(ki.damage, bossKi.rangedAttackDuration, ki.attackRange, RangedAttack.Receiver.PLAYER, entity)).
-                                add(new Position(position)).
-                                add(new Sprite(WeaponTextures.MONSTER_BALL.getTexture())).
-                                add(new Velocity(bossKi.rangedAttackSpeed * (targetPosition.x - position.x) / (distanceX + distanceY), bossKi.rangedAttackSpeed * (targetPosition.y - position.y) / (distanceX + distanceY))));
+                        engine.addEntity(new Entity().add(new RangedAttack(meleeCombatStats.damage, rangedCombatStats.attackDuration, meleeCombatStats.attackRange, RangedAttack.Receiver.PLAYER, entity))
+                                .add(new Position(position))
+                                .add(new Sprite(WeaponTextures.MONSTER_BALL.getTexture()))
+                                .add(new Velocity(rangedCombatStats.attackSpeed * (targetPosition.x - position.x) / (distanceX + distanceY), rangedCombatStats.attackSpeed * (targetPosition.y - position.y) / (distanceX + distanceY))));
 
-                        ki.framesSinceLastAttack = BossKi.RANGED_ATTACK_COOLDOWN;
+                        meleeCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
                     }
                 }
             }

@@ -101,7 +101,12 @@ public class InventoryHud
             {
                 if (inventory.items.get(j) != null)
                 {
-                    inventorySlots.get(i).setText((i % 10) + INV_SLOT_PREFIX + pickupMapper.get(inventory.items.get(j)).displayName);
+                    Pickup pickup = pickupMapper.get(inventory.items.get(j));
+
+                    if (pickup.equipped)
+                        inventorySlots.get(i).setText((i % 10) + INV_SLOT_PREFIX + "[" + pickup.displayName + "]");
+                    else
+                        inventorySlots.get(i).setText((i % 10) + INV_SLOT_PREFIX + pickup.displayName);
                 }
                 else
                 {

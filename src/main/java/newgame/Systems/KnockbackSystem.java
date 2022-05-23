@@ -3,6 +3,7 @@ package newgame.Systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import newgame.Components.*;
+import newgame.Components.Events.Knockback;
 import newgame.Components.Tags.Player;
 
 public class KnockbackSystem extends EntitySystem

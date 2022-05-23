@@ -5,6 +5,9 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import newgame.Components.*;
+import newgame.Components.Events.*;
+import newgame.Components.Items.MeleeWeaponStats;
+import newgame.textures.WeaponTextures;
 
 public class PlayerControlSystem extends EntitySystem
 {
@@ -12,9 +15,11 @@ public class PlayerControlSystem extends EntitySystem
 
     private final ComponentMapper<Position> positionMapper = ComponentMapper.getFor(Position.class);
     private final ComponentMapper<Velocity> velocityMapper = ComponentMapper.getFor(Velocity.class);
+    private final ComponentMapper<MeleeCombatStats> meleeWeaponStatsMapper = ComponentMapper.getFor(MeleeCombatStats.class);
+    private final ComponentMapper<RangedCombatStats> rangedWeaponStatsMapper = ComponentMapper.getFor(RangedCombatStats.class);
     private final ComponentMapper<PlayerControl> playerControlMapper = ComponentMapper.getFor(PlayerControl.class);
 
-    private Engine engine;
+    private final Engine engine;
 
     public PlayerControlSystem(Engine engine)
     {
@@ -32,9 +37,14 @@ public class PlayerControlSystem extends EntitySystem
     {
         for (int i = 0; i < controllableEntities.size(); i++)
         {
-            move(controllableEntities.get(i));
-            attack(controllableEntities.get(i));
-            handleItemInput(controllableEntities.get(i));
+            Entity controllableEntity = controllableEntities.get(i);
+
+            move(controllableEntity);
+            if (meleeWeaponStatsMapper.get(controllableEntity) != null)
+                meleeAttack(controllableEntity);
+            if (rangedWeaponStatsMapper.get(controllableEntity) != null)
+                rangedAttack(controllableEntity);
+            handleItemInput(controllableEntity);
         }
     }
 
@@ -47,47 +57,69 @@ public class PlayerControlSystem extends EntitySystem
 
         if (Gdx.input.isKeyPressed(PlayerControl.dropKey))
         {
-            if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+            int invSlot = getInvSlotInput();
+
+            if (invSlot != -1)
             {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 0)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 1)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 2)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 3)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_5))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 4)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_6))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 5)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_7))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 6)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_8))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 7)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_9))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 8)).add(new Position(positionMapper.get(entity))));
-            }
-            else if (Gdx.input.isKeyPressed(Input.Keys.NUM_0))
-            {
-                engine.addEntity(new Entity().add(new DropRequest(entity, 9)).add(new Position(positionMapper.get(entity))));
+                engine.addEntity(new Entity().add(new DropRequest(entity, invSlot)).add(new Position(positionMapper.get(entity))));
             }
         }
+
+        if (Gdx.input.isKeyPressed(PlayerControl.useKey))
+        {
+            int invSlot = getInvSlotInput();
+
+            if (invSlot != -1)
+            {
+                engine.addEntity(new Entity().add(new UseRequest(entity, invSlot)));
+            }
+        }
+    }
+
+    private int getInvSlotInput()
+    {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+        {
+            return 0;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+        {
+            return 1;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+        {
+            return 2;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_4))
+        {
+            return 3;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_5))
+        {
+            return 4;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_6))
+        {
+            return 5;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_7))
+        {
+            return 6;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_8))
+        {
+            return 7;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_9))
+        {
+            return 8;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_0))
+        {
+            return 9;
+        }
+
+        return -1;
     }
 
     private void move(Entity entity)
@@ -122,25 +154,93 @@ public class PlayerControlSystem extends EntitySystem
         }
     }
 
-    private void attack(Entity entity)
+    private void meleeAttack(Entity entity)
     {
         Position position = positionMapper.get(entity);
+        MeleeCombatStats meleeCombatStats = meleeWeaponStatsMapper.get(entity);
+
+        if (meleeCombatStats == null)
+            return;
+
+        if (meleeCombatStats.damage == 0)
+            return;
+
+        if (meleeCombatStats.framesSinceLastAttack == 0)
+        {
+            meleeCombatStats.framesSinceLastAttack = meleeCombatStats.attackCooldown;
+        }
+        else
+        {
+            meleeCombatStats.framesSinceLastAttack--;
+            return;
+        }
 
         if (Gdx.input.isKeyPressed(PlayerControl.attackForwardKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.UP, 2f, 0, 0, MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.UP, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed, MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackBackwardKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.DOWN, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.DOWN, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackRightKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.RIGHT, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.RIGHT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
         }
         else if (Gdx.input.isKeyPressed(PlayerControl.attackLeftKey))
         {
-            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.LEFT, 2f, 0, 0,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+            engine.addEntity(new Entity().add(new MeleeAttack(1f, MeleeAttack.AttackDirection.LEFT, meleeCombatStats.attackRange, meleeCombatStats.knockbackDuration, meleeCombatStats.knockbackSpeed,  MeleeAttack.Receiver.HOSTILE, entity)).add(new Position(position)));
+        }
+    }
+
+    private void rangedAttack(Entity entity)
+    {
+        Position position = positionMapper.get(entity);
+        RangedCombatStats rangedCombatStats = rangedWeaponStatsMapper.get(entity);
+
+        if (rangedCombatStats == null)
+            return;
+
+        if (rangedCombatStats.damage == 0)
+            return;
+
+        if (rangedCombatStats.framesSinceLastAttack == 0)
+        {
+            rangedCombatStats.framesSinceLastAttack = rangedCombatStats.attackCooldown;
+        }
+        else
+        {
+            rangedCombatStats.framesSinceLastAttack--;
+            return;
+        }
+
+        if (Gdx.input.isKeyPressed(PlayerControl.attackForwardKey))
+        {
+            engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
+                    .add(new Position(position))
+                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+        }
+        else if (Gdx.input.isKeyPressed(PlayerControl.attackBackwardKey))
+        {
+            engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
+                    .add(new Position(position))
+                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+        }
+        else if (Gdx.input.isKeyPressed(PlayerControl.attackRightKey))
+        {
+            engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
+                    .add(new Position(position))
+                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
+        }
+        else if (Gdx.input.isKeyPressed(PlayerControl.attackLeftKey))
+        {
+            engine.addEntity(new Entity().add(new RangedAttack(1f, rangedCombatStats.attackDuration, rangedCombatStats.attackRange, RangedAttack.Receiver.HOSTILE, entity))
+                    .add(new Position(position))
+                    .add(new Velocity(0, rangedCombatStats.attackSpeed))
+                    .add(new Sprite(WeaponTextures.STAFF_BALL.getTexture())));
         }
     }
 }

@@ -17,6 +17,7 @@ public class PlayerControl implements Component
 
     public static int pickupKey = Input.Keys.F;
     public static int dropKey = Input.Keys.R;
+    public static int useKey = Input.Keys.U;
 
     public float speed;
 

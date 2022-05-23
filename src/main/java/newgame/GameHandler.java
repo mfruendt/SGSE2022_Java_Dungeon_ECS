@@ -88,7 +88,7 @@ public class GameHandler extends MainController implements HeroObserver
         GuiSystem guiSystem = new GuiSystem();
         HealthSystem healthSystem = new HealthSystem(engine);
         DamageSystem damageSystem = new DamageSystem(engine);
-        PickupSystem pickupSystem = new PickupSystem(engine);
+        ItemSystem itemSystem = new ItemSystem(engine);
         //CollisionSystem collisionSystem = new CollisionSystem();
         CameraSystem cameraSystem = new CameraSystem(cameraEntity);
         PlayerControlSystem playerControlSystem = new PlayerControlSystem(engine);
@@ -97,7 +97,7 @@ public class GameHandler extends MainController implements HeroObserver
         engine.addSystem(movementSystem);
         engine.addSystem(healthSystem);
         engine.addSystem(damageSystem);
-        engine.addSystem(pickupSystem);
+        engine.addSystem(itemSystem);
         engine.addSystem(knockbackSystem);
         engine.addSystem(guiSystem);
         //engine.addSystem(collisionSystem);
@@ -465,10 +465,12 @@ public class GameHandler extends MainController implements HeroObserver
         heroEntity.add(new Player());
         heroEntity.add(new Inventory(10));
         heroEntity.add(new Health(10000));
+        heroEntity.add(new MeleeCombatStats());
+        heroEntity.add(new RangedCombatStats());
         heroEntity.add((new Experience(0f)));
         engine.addEntity(heroEntity);
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 10; i++)
         {
             engine.addEntity(MonsterFactory.createEasyMonster(levelController.getDungeon(), heroPosition));
         }
@@ -481,6 +483,8 @@ public class GameHandler extends MainController implements HeroObserver
         //engine.addEntity(MonsterFactory.createBossMonster(levelController.getDungeon(), heroPosition));
 
         engine.addEntity(ItemFactory.createSwordItem(levelController.getDungeon()));
+        engine.addEntity(ItemFactory.createShieldItem(levelController.getDungeon()));
+        engine.addEntity(ItemFactory.createHealthPotionItem(levelController.getDungeon()));
 
         //monsters.add(new MiniBoss(hero));
         
