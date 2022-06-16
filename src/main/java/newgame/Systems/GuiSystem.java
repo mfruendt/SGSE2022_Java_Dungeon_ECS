@@ -10,12 +10,21 @@ import newgame.EntityMapper;
 import newgame.Factories.HeroFactory;
 import newgame.gui.HudHandler;
 
+/** System used to display stats ont he GUI
+ * @author Maxim Fründt
+ */
 public class GuiSystem extends EntitySystem
 {
+    /** Entities that can be monitored on the GUI */
     private ImmutableArray<Entity> monitorableEntities;
 
+    /** HUD used to display the GUI */
     private HudHandler hudHandler;
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
@@ -23,6 +32,10 @@ public class GuiSystem extends EntitySystem
         hudHandler = new HudHandler(HeroFactory.HERO_INVENTORY_SIZE);
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {

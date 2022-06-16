@@ -22,7 +22,7 @@ import newgame.logger.LogMessages;
 public class GameHandler extends MainController
 {
     /* Number of easy monsters that may spawn on a level */
-    private final static int NUMBER_OF_EASY_MONSTERS = 10;
+    private final static int NUMBER_OF_EASY_MONSTERS = 700;
 
     /* Number of hard monsters that may spawn on a level */
     private final static int NUMBER_OF_HARD_MONSTERS = 0;
@@ -137,11 +137,5 @@ public class GameHandler extends MainController
         engine.addEntity(ItemFactory.createHealthPotionItem(levelController.getDungeon()));
 
         GameEventsLogger.getLogger().info(LogMessages.LEVEL_LOADED.toString());
-    }
-
-    private void restartGame()
-    {
-        setup();
-        onLevelLoad();
     }
 }

@@ -9,23 +9,40 @@ import newgame.Components.Events.*;
 import newgame.EntityMapper;
 import newgame.textures.WeaponTextures;
 
+/** System used to handle player inputs
+ * @author Maxim Fründt
+ */
 public class PlayerControlSystem extends EntitySystem
 {
+    /** Entities that can be controlled */
     private ImmutableArray<Entity> controllableEntities;
 
+    /** Engine to which this system belongs to */
     private final Engine engine;
 
+    /** Create new player control system
+     *
+     * @param engine Engine to which this system belongs to
+     */
     public PlayerControlSystem(Engine engine)
     {
         this.engine = engine;
     }
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
         controllableEntities = engine.getEntitiesFor(Family.all(PlayerControl.class, Velocity.class, Position.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -42,6 +59,10 @@ public class PlayerControlSystem extends EntitySystem
         }
     }
 
+    /** Handle inputs related to items
+     *
+     * @param entity Entity that is controlled
+     */
     private void handleItemInput(Entity entity)
     {
         if (Gdx.input.isKeyPressed(PlayerControl.pickupKey))
@@ -70,6 +91,8 @@ public class PlayerControlSystem extends EntitySystem
         }
     }
 
+    /** Get the additional input for the selected inventory slot
+     */
     private int getInvSlotInput()
     {
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
@@ -116,6 +139,10 @@ public class PlayerControlSystem extends EntitySystem
         return -1;
     }
 
+    /** Handle inputs related to movement
+     *
+     * @param entity Entity that is controlled
+     */
     private void move(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
@@ -148,6 +175,10 @@ public class PlayerControlSystem extends EntitySystem
         }
     }
 
+    /** Handle inputs related to melee attacks
+     *
+     * @param entity Entity that is controlled
+     */
     private void meleeAttack(Entity entity)
     {
         Position position = EntityMapper.positionMapper.get(entity);
@@ -188,6 +219,10 @@ public class PlayerControlSystem extends EntitySystem
         }
     }
 
+    /** Handle inputs related to ranged attacks
+     *
+     * @param entity Entity that is controlled
+     */
     private void rangedAttack(Entity entity)
     {
         Position position = EntityMapper.positionMapper.get(entity);

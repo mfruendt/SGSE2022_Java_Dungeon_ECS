@@ -11,22 +11,40 @@ import newgame.Components.Items.MeleeWeaponStats;
 import newgame.Components.Tags.Pickup;
 import newgame.EntityMapper;
 
+/** System used to handle item events
+ * @author Maxim Fründt
+ */
 public class ItemSystem extends EntitySystem
 {
+    /** Entities that represent a pickup request */
     private ImmutableArray<Entity> pickupRequests;
+    /** Entities that represent a drop request */
     private ImmutableArray<Entity> dropRequests;
+    /** Entities that represent a use request */
     private ImmutableArray<Entity> useRequests;
+    /** Entities that represent a destroy request */
     private ImmutableArray<Entity> destroyRequests;
+    /** Entities that can be picked up */
     private ImmutableArray<Entity> pickupableEntities;
 
+    /** Engine to which this system belongs to */
     private final Engine engine;
+    /** Range in which pickups can be picked up */
     private static final float PICKUP_RANGE = 0.5f;
 
+    /** Create new item system
+     *
+     * @param engine Engine to which this system belongs to
+     */
     public ItemSystem(Engine engine)
     {
         this.engine = engine;
     }
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
@@ -37,6 +55,10 @@ public class ItemSystem extends EntitySystem
         destroyRequests = engine.getEntitiesFor(Family.all(ItemDestroyRequest.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -87,12 +109,20 @@ public class ItemSystem extends EntitySystem
         }
     }
 
+    /** Destroy an item
+     *
+     * @param request Destroy request
+     */
     private void destroy(Entity request)
     {
         ItemDestroyRequest destroyRequest = EntityMapper.destroyRequestMapper.get(request);
         removeItemAt(destroyRequest.owner, destroyRequest.slot);
     }
 
+    /** Use an item
+     *
+     * @param request Use request
+     */
     private void use(Entity request)
     {
         UseRequest useRequest = EntityMapper.useRequestMapper.get(request);
@@ -215,6 +245,10 @@ public class ItemSystem extends EntitySystem
         }
     }
 
+    /** Drop an item from the inventory
+     *
+     * @param request Drop request
+     */
     private void dropPickupFromInventory(Entity request)
     {
         DropRequest dropRequest = EntityMapper.dropRequestMapper.get(request);
@@ -233,6 +267,11 @@ public class ItemSystem extends EntitySystem
         removeItemAt(dropRequest.requester, dropRequest.slot);
     }
 
+    /** Add a pickup to the inventory
+     *
+     * @param requester Inventory owner
+     * @param pickup Pickup that will be added
+     */
     private void addPickupToInventory(Entity requester, Entity pickup)
     {
         if (requester == null || pickup == null)
@@ -261,6 +300,11 @@ public class ItemSystem extends EntitySystem
         pickup.remove(Position.class);
     }
 
+    /** Remove item from inventory at index
+     *
+     * @param inventoryOwner Owner of the inventory
+     * @param slot Index
+     */
     private void removeItemAt(Entity inventoryOwner, int slot)
     {
         Inventory inventory = EntityMapper.inventoryMapper.get(inventoryOwner);
@@ -279,6 +323,11 @@ public class ItemSystem extends EntitySystem
         inventory.items.set(slot, null);
     }
 
+    /** Unequip an item
+     *
+     * @param owner Owner of the item
+     * @param equipment Equipment of the owner
+     */
     private void unequip(Entity owner, Entity equipment)
     {
         MeleeCombatStats meleeCombatStats = EntityMapper.meleeCombatStatsMapper.get(owner);
@@ -328,6 +377,12 @@ public class ItemSystem extends EntitySystem
         }
     }
 
+    /** Check if the positions collide
+     *
+     * @param pos1 First position
+     * @param pos2 Second position
+     * @return True if the positions collide, else false
+     */
     private boolean checkContact(Position pos1, Position pos2)
     {
         return Math.abs(pos1.x - pos2.x) <= PICKUP_RANGE && Math.abs(pos1.y - pos2.y) <= PICKUP_RANGE;

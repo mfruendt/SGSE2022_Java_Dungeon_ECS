@@ -11,11 +11,20 @@ import newgame.Components.Position;
 import newgame.Components.Velocity;
 import newgame.EntityMapper;
 
+/** System used to draw entities
+ * @author Maxim Fründt
+ */
 public class SpriteSystem extends EntitySystem
 {
+    /** Entities that can be animated */
     private ImmutableArray<Entity> animatableEntities;
+    /** Entities that can be drawn */
     private ImmutableArray<Entity> drawableEntities;
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
@@ -23,6 +32,10 @@ public class SpriteSystem extends EntitySystem
         drawableEntities = engine.getEntitiesFor(Family.all(newgame.Components.Sprite.class, Position.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -41,6 +54,10 @@ public class SpriteSystem extends EntitySystem
         GameSetup.batch.end();
     }
 
+    /** Draw the sprite
+     *
+     * @param entity Entity of which the sprite will be drawn
+     */
     private void drawSprite(Entity entity)
     {
         Position position = EntityMapper.positionMapper.get(entity);
@@ -49,6 +66,10 @@ public class SpriteSystem extends EntitySystem
         drawSprite(sprite.sprite.getHeight() / sprite.sprite.getWidth(), sprite.sprite, new Point(position.x, position.y));
     }
 
+    /** Draw the animation
+     *
+     * @param entity Entity of which the animation will be drawn
+     */
     private void drawAnimation(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
@@ -83,6 +104,12 @@ public class SpriteSystem extends EntitySystem
         drawSprite((float)texture.getHeight() / (float)texture.getWidth(), new com.badlogic.gdx.graphics.g2d.Sprite(texture), new Point(position.x, position.y));
     }
 
+    /** Draw the sprite
+     *
+     * @param yScaling Vertical scaling of the sprite
+     * @param sprite Sprite that will be drawn
+     * @param position Position of the sprite
+     */
     private void drawSprite(float yScaling, Sprite sprite, Point position)
     {
         sprite.setSize(1.0f, yScaling);

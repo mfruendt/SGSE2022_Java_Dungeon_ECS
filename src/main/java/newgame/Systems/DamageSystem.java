@@ -12,25 +12,39 @@ import newgame.Components.Tags.HostileKi;
 import newgame.Components.Items.ShieldStats;
 import newgame.Components.Items.MeleeWeaponStats;
 import newgame.Components.Tags.PassiveKi;
-import newgame.Components.Tags.Pickup;
 import newgame.Components.Tags.Player;
 import newgame.EntityMapper;
 import newgame.logger.GameEventsLogger;
 import newgame.logger.LogMessages;
 
+/** System used to damage entities
+ * @author Maxim Fründt
+ */
 public class DamageSystem extends EntitySystem
 {
+    /** Entities that can be damaged */
     private ImmutableArray<Entity> damageableEntities;
+    /** Entities that represent a melee attack */
     private ImmutableArray<Entity> meleeAttackEntities;
+    /** Entities that represent a ranged attack */
     private ImmutableArray<Entity> rangedAttackEntities;
 
+    /** Engine to which this system belongs to */
     private final Engine engine;
 
+    /** Create new damage system
+     *
+     * @param engine Engine to which this system belongs to
+     */
     public DamageSystem(Engine engine)
     {
         this.engine = engine;
     }
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
@@ -39,6 +53,10 @@ public class DamageSystem extends EntitySystem
         rangedAttackEntities = engine.getEntitiesFor(Family.all(RangedAttack.class, Position.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -112,6 +130,12 @@ public class DamageSystem extends EntitySystem
         }
     }
 
+    /** Apply a ranged attack to a hit entity
+     *
+     * @param damagedEntity Entity that has been hit
+     * @param attack Attack that will be applied to the entity
+     * @return True if attack could be applied, else false
+     */
     private boolean executeRangedAttack(Entity damagedEntity, RangedAttack attack)
     {
         HostileKi hostileKi = EntityMapper.hostileKiMapper.get(damagedEntity);
@@ -158,6 +182,12 @@ public class DamageSystem extends EntitySystem
         return false;
     }
 
+    /** Apply a melee attack to a hit entity
+     *
+     * @param damagedEntity Entity that has been hit
+     * @param attack Attack that will be applied to the entity
+     * @return True if attack could be applied, else false
+     */
     private boolean executeMeleeAttack(Entity damagedEntity, MeleeAttack attack)
     {
         HostileKi hostileKi = EntityMapper.hostileKiMapper.get(damagedEntity);
@@ -220,6 +250,15 @@ public class DamageSystem extends EntitySystem
         return false;
     }
 
+    /** Damage a monster
+     *
+     * @param passiveKi Passive KI of the monster
+     * @param hostileKi Hostile KI of the monster
+     * @param damagedEntity Entity that will be damaged
+     * @param damage Damage that will be applied
+     * @param protection Protection of the entity
+     * @param attacker Entity that attacked
+     */
     private void damageMonster(PassiveKi passiveKi, HostileKi hostileKi, Entity damagedEntity, float damage, float protection, Entity attacker)
     {
         Health health = EntityMapper.healthMapper.get(damagedEntity);
@@ -240,11 +279,25 @@ public class DamageSystem extends EntitySystem
         }
     }
 
+    /** Check if two positions collide with range
+     *
+     * @param range Range of the collision
+     * @param pos1 First position to compare
+     * @param pos2 Second position to compare
+     * @return True if the positions collide, else false
+     */
     private boolean checkCollision(float range, Position pos1, Position pos2)
     {
         return Math.abs(pos1.x - pos2.x) <= range && Math.abs(pos1.y - pos2.y) <= range;
     }
 
+    /** Check if the melee collision has collided with the position
+     *
+     * @param attack Melee attack that will be checked
+     * @param attackPosition Position of the attack
+     * @param entityPosition Position of the entity that will be checked
+     * @return True if melee attack has collided with the other entity, else false
+     */
     private boolean checkMeleeCollision(MeleeAttack attack, Position attackPosition, Position entityPosition)
     {
         if (Math.abs(entityPosition.x - attackPosition.x) <= attack.radius && Math.abs(entityPosition.y - attackPosition.y) <= attack.radius)

@@ -9,41 +9,80 @@ import newgame.Components.Tags.BossKi;
 import newgame.Components.Tags.PassiveKi;
 import newgame.animations.CharacterAnimations;
 
+/** Factory to create entities that represent monsters
+ * @author Maxim Fründt
+ */
 public class MonsterFactory
 {
+    /** Speed of the hard monster */
     public static float HARD_MONSTER_SPEED = 0.1f;
+    /** Health of the hard monster */
     public static float HARD_MONSTER_HEALTH = 0.5f;
+    /** Damage of the hard monster */
     public static float HARD_MONSTER_DAMAGE = 1f;
+    /** Protection of the hard monster */
     public static float HARD_MONSTER_PROTECTION = 0.5f;
+    /** Range of the hard monster */
     public static float HARD_MONSTER_RANGE = 1f;
+    /** Experience of the hard monster */
     public static float HARD_MONSTER_EXPERIENCE = 0.5f;
+    /** Knockback speed of the hard monster */
     public static float HARD_MONSTER_KNOCKBACK_SPEED = 0.5f;
+    /** Knockback duration of the hard monster */
     public static int HARD_MONSTER_KNOCKBACK_DURATION = 8;
+    /** Attack cooldown of the hard monster */
     public static int HARD_MONSTER_ATTACK_COOLDOWN = 8;
 
+    /** Speed of the easy monster */
     public static float EASY_MONSTER_SPEED = 0.1f;
+    /** Health of the easy monster */
     public static float EASY_MONSTER_HEALTH = 10f;
+    /** Damage of the easy monster */
     public static float EASY_MONSTER_DAMAGE = 1f;
+    /** Protection of the easy monster */
     public static float EASY_MONSTER_PROTECTION = 0.3f;
+    /** Range of the easy monster */
     public static float EASY_MONSTER_RANGE = 1f;
+    /** Experience of the easy monster */
     public static float EASY_MONSTER_EXPERIENCE = 0.1f;
+    /** Knockback speed of the easy monster */
     public static float EASY_MONSTER_KNOCKBACK_SPEED = 0.2f;
+    /** Knockback duration of the easy monster */
     public static int EASY_MONSTER_KNOCKBACK_DURATION = 4;
+    /** Attack cooldown of the easy monster */
     public static int EASY_MONSTER_ATTACK_COOLDOWN = 16;
 
+    /** Speed of the boss monster */
     public static float BOSS_MONSTER_SPEED = 0.1f;
+    /** Health of the boss monster */
     public static float BOSS_MONSTER_HEALTH = 15f;
+    /** Damage of the boss monster */
     public static float BOSS_MONSTER_DAMAGE = 1f;
+    /** Protection of the boss monster */
     public static float BOSS_MONSTER_PROTECTION = 1f;
+    /** Range of the boss monster */
     public static float BOSS_MONSTER_RANGE = 1f;
+    /** Duration of ranged attacks of the boss monster */
     public static int BOSS_MONSTER_RANGED_DURATION = 64;
+    /** Range of ranged attacks of the boss monster */
     public static float BOSS_MONSTER_RANGED_RANGE = 4f;
+    /** Speed of ranged attacks of the boss monster */
     public static float BOSS_MONSTER_RANGED_SPEED = 0.5f;
+    /** Experience of the boss monster */
     public static float BOSS_MONSTER_EXPERIENCE = 2f;
+    /** Knockback speed of the boss monster */
     public static float BOSS_MONSTER_KNOCKBACK_SPEED = 0.5f;
+    /** Knockback duration of the boss monster */
     public static int BOSS_MONSTER_KNOCKBACK_DURATION = 8;
+    /** Attack cooldown of the boss monster */
     public static int BOSS_MONSTER_ATTACK_COOLDOWN = 6;
 
+    /** Create new entity that represents an easy monster
+     *
+     * @param level Level of the monster
+     * @param target Target of the monster
+     * @return Entity that represents an easy monster
+     */
     public static Entity createEasyMonster(DungeonWorld level, Position target)
     {
         Entity easyMonster = new Entity();
@@ -64,6 +103,12 @@ public class MonsterFactory
         return easyMonster;
     }
 
+    /** Create new entity that represents a hard monster
+     *
+     * @param level Level of the monster
+     * @param target Target of the monster
+     * @return Entity that represents aa hard monster
+     */
     public static Entity createHardMonster(DungeonWorld level, Position target)
     {
         Entity hardMonster = new Entity();
@@ -84,6 +129,12 @@ public class MonsterFactory
         return hardMonster;
     }
 
+    /** Create new entity that represents a boss monster
+     *
+     * @param level Level of the monster
+     * @param target Target of the monster
+     * @return Entity that represents aa boss monster
+     */
     public static Entity createBossMonster(DungeonWorld level, Position target)
     {
         Entity bossMonster = new Entity();

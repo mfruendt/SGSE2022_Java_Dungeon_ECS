@@ -184,7 +184,7 @@ public class KiSystem extends EntitySystem
     private void calcRandomMovement(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
-        PassiveKi ki = EntityMapper.easyKiMapper.get(entity);
+        PassiveKi ki = EntityMapper.passiveKiMapper.get(entity);
         Position position = EntityMapper.positionMapper.get(entity);
 
         boolean hasMoved = false;

@@ -3,19 +3,33 @@ package newgame.Components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 
+/** Component for melee combat stats
+ * @author Maxim Fründt
+ */
 public class MeleeCombatStats implements Component
 {
+    /** Damage that can be dealt */
     public float damage;
+    /** Protection against melee damage */
     public float protection;
+    /** Attack range of this entity */
     public float attackRange;
+    /** Knockback speed that this entity can deal */
     public float knockbackSpeed;
+    /** Knockback duration that this entity can deal */
     public int knockbackDuration;
+    /** Cooldown of melee attacks */
     public int attackCooldown;
+    /** Duration since the last attack was initiated in frames */
     public int framesSinceLastAttack = 0;
 
+    /** Melee weapon that is equipped */
     public Entity equippedWeapon;
+    /** Melee protection that is equipped */
     public Entity equippedShield;
 
+    /** Create new melee combat stats component
+     */
     public MeleeCombatStats()
     {
 

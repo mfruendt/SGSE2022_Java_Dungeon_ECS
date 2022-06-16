@@ -5,12 +5,23 @@ import newgame.Components.*;
 import newgame.Components.Tags.Player;
 import newgame.animations.CharacterAnimations;
 
+/** Factory to create entities that represent heros
+ * @author Maxim Fründt
+ */
 public class HeroFactory
 {
+    /** Health of the hero */
     public static final float HERO_HEALTH = 1000f;
+    /** Speed of the hero */
     public static final float HERO_SPEED = 0.2f;
+    /** Size of the inventory of the hero */
     public static final int HERO_INVENTORY_SIZE = 10;
 
+    /** Create new entity that represents a hero
+     *
+     * @param spawnPosition Spawn position of the hero
+     * @return Entity that represents a hero
+     */
     public static Entity createHero(Position spawnPosition)
     {
         Entity hero = new Entity();

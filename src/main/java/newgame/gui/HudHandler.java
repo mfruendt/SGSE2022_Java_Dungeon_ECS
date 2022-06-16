@@ -9,10 +9,13 @@ import newgame.Components.Health;
  */
 public class HudHandler
 {
+    /** HUD used to draw */
     private final HUD hud;
 
+    /** Hud element used to display the player stats */
     private final PlayerStatsHud statsHudElement;
 
+    /** Hud element used to display the inventory */
     private final InventoryHud invHudElement;
 
     /** Create new HUD handler
@@ -44,6 +47,10 @@ public class HudHandler
         }
     }
 
+    /** Update the inventory gui
+     *
+     * @param inventory Displayed inventory
+     */
     public void updateInventory(newgame.Components.Inventory inventory)
     {
         if (inventory != null)

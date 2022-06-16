@@ -7,16 +7,28 @@ import newgame.Components.Events.Knockback;
 import newgame.Components.Tags.Player;
 import newgame.EntityMapper;
 
+/** System used to knock back entities
+ * @author Maxim Fründt
+ */
 public class KnockbackSystem extends EntitySystem
 {
+    /** Entities that can be knocked back */
     private ImmutableArray<Entity> knockbackedEntities;
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
         knockbackedEntities = engine.getEntitiesFor(Family.all(Velocity.class, Knockback.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {

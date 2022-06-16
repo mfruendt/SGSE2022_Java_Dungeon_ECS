@@ -7,16 +7,28 @@ import newgame.Components.Position;
 import newgame.Components.Velocity;
 import newgame.EntityMapper;
 
+/** System used to move entities
+ * @author Maxim Fründt
+ */
 public class MovementSystem extends EntitySystem
 {
+    /** Entities that can be moved */
     private ImmutableArray<Entity> movableEntities;
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
         movableEntities = engine.getEntitiesFor(Family.all(Velocity.class, Position.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -26,6 +38,10 @@ public class MovementSystem extends EntitySystem
         }
     }
 
+    /** Move the entity
+     *
+     * @param entity Entity that will be moved
+     */
     private void move(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
