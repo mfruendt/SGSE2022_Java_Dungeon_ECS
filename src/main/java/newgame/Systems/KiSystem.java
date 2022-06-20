@@ -17,14 +17,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class KiSystem extends EntitySystem
 {
+    /** Entities that possess a passive KI */
     private ImmutableArray<Entity> passiveEntities;
+    /** Entities that possess a hostile KI */
     private ImmutableArray<Entity> hostileEntities;
+    /** Player entities */
     private ImmutableArray<Entity> playerEntities;
 
-
-
+    /** Engine to which this system belongs to */
     private Engine engine;
 
+    /** Callback that will be invoked when this system is added to an engine
+     *
+     * @param engine The {@link Engine} this system was added to.
+     */
     @Override
     public void addedToEngine(Engine engine)
     {
@@ -34,6 +40,10 @@ public class KiSystem extends EntitySystem
         playerEntities = engine.getEntitiesFor(Family.all(Player.class, Position.class).get());
     }
 
+    /** Update the system
+     *
+     * @param deltaTime The time passed since last frame in seconds.
+     */
     @Override
     public void update(float deltaTime)
     {
@@ -49,6 +59,10 @@ public class KiSystem extends EntitySystem
         }
     }
 
+    /** Check if the input entity is close enough to its target to attack
+     *
+     * @param entity Entity which tries to attack
+     */
     private void checkForAttackContact(Entity entity)
     {
         RangedCombatStats rangedCombatStats = EntityMapper.rangedCombatStatsMapper.get(entity);
@@ -103,6 +117,10 @@ public class KiSystem extends EntitySystem
         }
     }
 
+    /** Calculate the movement to the target of the entity
+     *
+     * @param entity Entity that should be moved
+     */
     private void calcMovementToTarget(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
@@ -181,6 +199,10 @@ public class KiSystem extends EntitySystem
         }
     }
 
+    /** Calculate random movement for the entity
+     *
+     * @param entity Entity that should be moved
+     */
     private void calcRandomMovement(Entity entity)
     {
         Velocity velocity = EntityMapper.velocityMapper.get(entity);
@@ -408,6 +430,12 @@ public class KiSystem extends EntitySystem
         }
     }
 
+    /** Check if the position is within the bounds of the level
+     *
+     * @param level Level of the entity
+     * @param newPos Position that the entity wants to go to
+     * @return True if the position is valid, else false
+     */
     private boolean checkNewPos(DungeonWorld level, Point newPos)
     {
         return level.isTileAccessible(newPos);
